@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/07 04:06:28 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/07 22:23:43 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "main.h"
 #include "mlx.h"
 #include <stdio.h>
-
-int	create_rgb(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
-}
 
 int	access_file(char *file)
 {
@@ -99,6 +94,41 @@ int	validate_data(char **raw, t_data *data)
 	return (0);
 }
 
+void	render(t_data *a)
+{
+	int	i;
+	int	j;
+	double	u;
+	double	v;
+
+	int 		x;
+
+	double posX = 22, posY = 12;
+	double dirX = 01, dirY = 0;
+	double planeX = 0, planeY = 0.66;
+
+	ft_bzero(a->img.addr, a->canv.width * a->canv.height * a->img.bits_per_pixel / 8);
+	j = a->canv.height - 1;
+	while (j >= 0)
+	{
+		i = 0;
+		while (i < a->canv.width)
+		{
+			u = (double)i / (a->canv.width - 1);
+			v = (double)j / (a->canv.height - 1);
+			a->_ray = ray(a->cam.origin, \
+						vminus(vplus(vplus(a->cam.left_bottom, \
+						vmult(a->cam.horizontal, u)), vmult(a->cam.vertical, v)), \
+						a->cam.origin));
+			a->rgb = ray_color(&a->_ray, &a->sp);
+			write_color(&a->img, i, a->canv.height - j - 1, a->rgb);
+			i++;
+		}
+		j--;
+	}
+	mlx_put_image_to_window(a->mlx, a->mlx_win, a->img.ptr, 0, 0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -117,5 +147,12 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("validate_data error\n", 2);
 		return (1);
 	}
+	data.sc.mlx = mlx_init();
+	data.sc.mlx_win = mlx_new_window(data.sc.mlx, screenWidth, screenHeight, "hi");
+	data.img.addr = mlx_get_data_addr(data.img.ptr, &data.img.bits_per_pixel, \
+								&data.img.line_length, &data.img.endian);
+
+	render(&data);
+	mlx_loop(data.sc.mlx);
 	return (0);
 }
