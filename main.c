@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/07 22:23:43 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/07 22:34:24 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,32 +101,23 @@ void	render(t_data *a)
 	double	u;
 	double	v;
 
-	int 		x;
-
 	double posX = 22, posY = 12;
 	double dirX = 01, dirY = 0;
 	double planeX = 0, planeY = 0.66;
 
-	ft_bzero(a->img.addr, a->canv.width * a->canv.height * a->img.bits_per_pixel / 8);
-	j = a->canv.height - 1;
+	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
 	while (j >= 0)
 	{
 		i = 0;
-		while (i < a->canv.width)
+		while (i < screenWidth)
 		{
-			u = (double)i / (a->canv.width - 1);
-			v = (double)j / (a->canv.height - 1);
-			a->_ray = ray(a->cam.origin, \
-						vminus(vplus(vplus(a->cam.left_bottom, \
-						vmult(a->cam.horizontal, u)), vmult(a->cam.vertical, v)), \
-						a->cam.origin));
-			a->rgb = ray_color(&a->_ray, &a->sp);
-			write_color(&a->img, i, a->canv.height - j - 1, a->rgb);
+			u = (double)i / (screenWidth - 1);
+			v = (double)j / (screenHeight - 1);
 			i++;
 		}
 		j--;
 	}
-	mlx_put_image_to_window(a->mlx, a->mlx_win, a->img.ptr, 0, 0);
+	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
 }
 
 int	main(int argc, char **argv)
