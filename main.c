@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/07 22:34:24 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 11:06:12 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,31 @@ char	**load_map(char **raw, int depth)
 	return (map);
 }
 
+void	player_pos(char **map, t_data *data)
+{
+	char *line;
+	int	x;
+	int y;
+	y = 0;
+	while (*map)
+	{
+		x = 0;
+		line = *map;
+		while (*line)
+		{
+			if (*line == 'N')
+			{
+				data->player.row = y;
+				data->player.col = x;
+			}
+			line++;
+			x++;
+		}
+		y++;
+		map++;
+	}
+}
+
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
@@ -85,13 +110,17 @@ int	validate_data(char **raw, t_data *data)
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
-	while (*(data->map))
-	{
-		printf("%s", *(data->map));
-		(data->map)++;
-	}
 	free(raw);
+	player_pos(data->map, data);
 	return (0);
+}
+
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 void	render(t_data *a)
@@ -101,23 +130,62 @@ void	render(t_data *a)
 	double	u;
 	double	v;
 
-	double posX = 22, posY = 12;
-	double dirX = 01, dirY = 0;
-	double planeX = 0, planeY = 0.66;
-
 	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
-	while (j >= 0)
+	j = 0;
+	while (j < screenHeight)
 	{
 		i = 0;
 		while (i < screenWidth)
 		{
-			u = (double)i / (screenWidth - 1);
-			v = (double)j / (screenHeight - 1);
+			u = (double)i / (screenWidth - 1) * 9.999;
+			v = (double)j / (screenHeight - 1) * 9.999;
+			//printf("convert x : %d, y : %d \n", (int)u, (int)v);
+			int x = (int)u + 10;
+			int y = (int)v;
+			if (a->map[y][x] == '0')
+				my_mlx_pixel_put(&a->img, i, j, 0x00ff00);
+			else if (a->map[y][x] == '1')
+				my_mlx_pixel_put(&a->img, i, j, 0xff0000);
+			else if (a->map[y][x] == 'N')
+				my_mlx_pixel_put(&a->img, i, j, 0x0000ff);
+			else
+				my_mlx_pixel_put(&a->img, i, j, 0x000000);
 			i++;
 		}
-		j--;
+		j++;
 	}
 	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
+}
+
+int	handle_key_down(int keycode, t_data *param)
+{
+	if (keycode == KEY_W)
+	{
+		param->map[param->player.row][param->player.col] = '0';
+		param->player.row--;
+		param->map[param->player.row][param->player.col] = 'N';
+	}
+	else if (keycode == KEY_A)
+	{
+		param->map[param->player.row][param->player.col] = '0';
+		param->player.col--;
+		param->map[param->player.row][param->player.col] = 'N';
+	}
+	else if (keycode == KEY_S)
+	{
+		param->map[param->player.row][param->player.col] = '0';
+		param->player.row++;
+		param->map[param->player.row][param->player.col] = 'N';
+	}
+	else if (keycode == KEY_D)
+	{
+		param->map[param->player.row][param->player.col] = '0';
+		param->player.col++;
+		param->map[param->player.row][param->player.col] = 'N';
+	}
+	//printf("%d %d \n", param->player.col, param->player.row);
+	render(param);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -140,10 +208,11 @@ int	main(int argc, char **argv)
 	}
 	data.sc.mlx = mlx_init();
 	data.sc.mlx_win = mlx_new_window(data.sc.mlx, screenWidth, screenHeight, "hi");
+	data.img.ptr = mlx_new_image(data.sc.mlx, screenWidth, screenHeight);
 	data.img.addr = mlx_get_data_addr(data.img.ptr, &data.img.bits_per_pixel, \
 								&data.img.line_length, &data.img.endian);
-
 	render(&data);
+	mlx_hook(data.sc.mlx_win, 2, 0, &handle_key_down, &data);
 	mlx_loop(data.sc.mlx);
 	return (0);
 }

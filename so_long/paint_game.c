@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 00:40:15 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/07 21:27:37 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 02:41:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	paint_img(t_param *param, char *path, int row, int col)
 	int		width;
 	int		height;
 
-	image = mlx_png_file_to_image(param->mlx, path, &width, &height);
+	image = mlx_xpm_file_to_image(param->mlx, path, &width, &height);
 	if (!image)
 		error_handler("image gen failed!");
 	mlx_put_image_to_window(param->mlx, param->win, image,
@@ -41,7 +41,7 @@ void	paint_element(t_param *param, char tile, int row, int col)
 	else if (tile == TILE_PLAYER)
 		paint_img(param, "./assets/player.xpm", row, col);
 	else if (tile == TILE_WALL)
-		paint_img(param, "./assets/barrel.png", row, col);
+		paint_img(param, "./assets/wall.xpm", row, col);
 }
 
 void	paint_elements(t_param *param, int row_data, int row)

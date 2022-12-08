@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/07 22:22:22 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 10:42:37 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,23 @@
 #define screenHeight 480
 #define mapWidth 24
 #define mapHeight 24
+
+typedef enum e_list_of_key_code
+{
+	KEY_W = 13,
+	KEY_S = 1,
+	KEY_A = 0,
+	KEY_D = 2,
+	KEY_ESC = 53,
+	X_EVENT_KEY_PRESS = 2,
+	X_EVENT_KEY_EXIT = 17
+}	t_key_code;
+
+typedef struct s_position
+{
+	int	row;
+	int	col;
+}	t_position;
 
 typedef struct s_img
 {
@@ -48,6 +65,7 @@ typedef struct s_data
 	int		map_height;
 	t_screen	sc;
 	t_img		img;
+	t_position	player;
 }	t_data;
 
 
