@@ -1,1 +1,2 @@
-objs/utils.o: utils.c so_long.h mlx/mlx.h libft/includes/libft.h
+objs/utils.o: srcs/utils.c srcs/../so_long.h srcs/.././mlx/mlx.h \
+  srcs/../libft/includes/libft.h

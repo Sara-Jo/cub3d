@@ -6,7 +6,7 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/08 11:49:15 by sjo               #+#    #+#              #
-#    Updated: 2022/12/07 21:08:55 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/08 15:04:20 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS			=	init.c	\
 					paint_game.c	\
 					so_long.c	\
 					utils.c	
+SRCS_DIR		=	srcs
 OBJS_DIR		= 	objs
 OBJS			=	$(SRCS:%.c=%.o)
 OBJECTS			= 	$(patsubst %.o, $(OBJS_DIR)/%.o, $(OBJS))
@@ -29,11 +30,9 @@ DEPENDS		 	= 	$(patsubst %.d, $(OBJS_DIR)/%.d, $(DEPS))
 CLIB			=	-L$(MLX_DIR) -lmlx -L$(LIBFTGNL_DIR) -lftgnl \
 					-framework OpenGL -framework AppKit
 
-CC				=	cc
 CFLAGS			=	-Wall -Wextra -Werror -g3
-RM				=	rm -f
 
-$(OBJS_DIR)/%.o : %.c
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MMD
 

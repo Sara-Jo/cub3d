@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 20:19:20 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/07 18:23:09 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/08 15:00:34 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
-#include "./libft/includes/libft.h"
+#include "../so_long.h"
+#include "../libft/includes/libft.h"
 
 int	open_map(char *path)
 {

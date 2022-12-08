@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/08 10:42:37 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 20:03:27 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define MAIN_H
 
 # include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft.h"
 
-#define screenWidth 640
-#define screenHeight 480
-#define mapWidth 24
-#define mapHeight 24
+#define screenWidth 1024
+#define screenHeight 1024
 
 typedef enum e_list_of_key_code
 {
@@ -54,25 +55,28 @@ typedef struct s_screen
 
 typedef struct s_data
 {
-	char	*texture_ea;
-	char	*texture_we;
-	char	*texture_so;
-	char	*texture_no;
-	int		f_color;
-	int		c_color;
-	char	**map;
-	int		map_width;
-	int		map_height;
+	char		*texture_ea;
+	char		*texture_we;
+	char		*texture_so;
+	char		*texture_no;
+	int			f_color;
+	int			c_color;
+	char		**map;
+	int			map_width;
+	int			map_height;
+	char		player_dir;
+	char		**view;
 	t_screen	sc;
 	t_img		img;
 	t_position	player;
 }	t_data;
 
-
-
-
-
 char	*get_next_line(int fd);
 int		ft_isspace(int c);
+void	render(t_data *data);
+int		access_file(char *file);
+char	**file_to_rawdata(int fd, int depth);
+int		validate_data(char **raw, t_data *data);
+int		handle_key_down(int keycode, t_data *param);
 
 #endif

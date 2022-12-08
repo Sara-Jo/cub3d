@@ -1,1 +1,2 @@
-objs/map2.o: map2.c so_long.h mlx/mlx.h libft/includes/libft.h
+objs/map2.o: srcs/map2.c srcs/../so_long.h srcs/.././mlx/mlx.h \
+  srcs/../libft/includes/libft.h

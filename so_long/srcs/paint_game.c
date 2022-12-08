@@ -6,11 +6,11 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 00:40:15 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/08 02:41:18 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 15:00:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "../so_long.h"
 
 void	paint_img(t_param *param, char *path, int row, int col)
 {

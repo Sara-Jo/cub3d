@@ -1,1 +1,1 @@
-objs/so_long.o: so_long.c so_long.h mlx/mlx.h
+objs/so_long.o: srcs/so_long.c srcs/../so_long.h srcs/.././mlx/mlx.h

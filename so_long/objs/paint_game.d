@@ -1,1 +1,2 @@
-objs/paint_game.o: paint_game.c so_long.h mlx/mlx.h
+objs/paint_game.o: srcs/paint_game.c srcs/../so_long.h \
+  srcs/.././mlx/mlx.h

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:02:45 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/07 18:24:51 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/08 15:00:34 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
-#include "./libft/includes/libft.h"
+#include "../so_long.h"
+#include "../libft/includes/libft.h"
 
 void	check_map(t_game *game)
 {
