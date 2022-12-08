@@ -6,13 +6,14 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/08 21:10:38 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/08 21:49:40 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "libft.h"
 #include "mlx.h"
+#include <stdio.h>
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
@@ -49,30 +50,19 @@ void	view_north(t_data *a)
 
 void	render(t_data *a)
 {
+	(void)a;
+	// double posX = 22, posY = 12;
+	double dirX = -1, dirY = 0;
+	double planeX = 0, planeY = 0.66;
 	int	i;
-	int	j;
-
-	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
-	// a->view = player_veiw(a);
-	j = 0;
-	while (j < screenHeight)
+	i = 0;
+	while (i < screenWidth)
 	{
-		i = 0;
-		while (i < screenWidth)
-		{
-			
-			my_mlx_pixel_put(&a->img, i, j, 0x00002f);
-			// if (a->player_dir == 'N')
-			//	 view_north(a, i, j);
-			// else if (a->player_dir == 'S')
-			//	 view_south(a);
-			// else if (a->player_dir == 'E')
-			//	 view_east(a);
-			// else if (a->player_dir == 'W')
-			//	 view_west(a);
-			i++;
-		}
-		j++;
+		double camX = 2 * i / (double)screenWidth - 1;
+		double rayDirX = dirX + planeX * camX;
+		double rayDirY = dirY + planeY * camX;
+		
+		i++;
 	}
-	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
+	// mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
 }
