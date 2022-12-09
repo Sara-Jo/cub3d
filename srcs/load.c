@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/09 18:11:13 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 01:39:40 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	**load_map(char **raw, int depth)
 	return (map);
 }
 
-static void	player_pos(char **map, t_position *player, t_data *a)
+static void	player_pos(char **map, t_player *player)
 {
 	char *line;
 	int	x;
@@ -73,11 +73,45 @@ static void	player_pos(char **map, t_position *player, t_data *a)
 		line = *map;
 		while (*line)
 		{
-			if (*line == 'N' || *line == 'S' || *line == 'E' || *line == 'W')
+			if (*line == 'N')
 			{
+				player->player_dir = *line;
 				player->row = y;
 				player->col = x;
-				a->player_dir = *line;
+				player->dir.x = -1;
+				player->dir.y = 0;
+				player->plane.x = 0;
+				player->plane.y = 0.66;
+			}
+			else if (*line == 'S')
+			{
+				player->player_dir = *line;
+				player->row = y;
+				player->col = x;
+				player->dir.x = 1;
+				player->dir.y = 0;
+				player->plane.x = 0;
+				player->plane.y = -0.66;
+			}
+			else if (*line == 'E')
+			{
+				player->player_dir = *line;
+				player->row = y;
+				player->col = x;
+				player->dir.x = 0;
+				player->dir.y = -1;
+				player->plane.x = 0.66;
+				player->plane.y = 0;
+			}
+			else if (*line == 'W')
+			{
+				player->player_dir = *line;
+				player->row = y;
+				player->col = x;
+				player->dir.x = 0;
+				player->dir.y = 1;
+				player->plane.x = -0.66;
+				player->plane.y = 0;
 			}
 			line++;
 			x++;
@@ -110,6 +144,6 @@ int	validate_data(char **raw, t_data *data)
 	}
 	data->map = load_map(&raw[i], 0);
 	free(raw);
-	player_pos(data->map, &data->player, data);
+	player_pos(data->map, &data->player);
 	return (0);
 }

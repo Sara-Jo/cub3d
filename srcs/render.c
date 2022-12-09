@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/09 19:35:22 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 01:22:56 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	render(t_data *a)
 				mapY += stepY;
 				side = 1;
 			}
-			if (worldMap[mapX][mapY] > 0)
+			if (a->map[mapX][mapY] == '1')
 				hit = 1;
 		}
 		if (side == 0)
@@ -126,14 +126,16 @@ void	render(t_data *a)
 		if (drawEnd >= screenHeight)
 			drawEnd = screenHeight - 1;
 		int color;
-		switch(worldMap[mapX][mapY])
-		{
-			case 1:  color = 0xff0000;  break; //red
-			case 2:  color = 0x00ff00;  break; //green
-			case 3:  color = 0x0000ff;   break; //blue
-			case 4:  color = 0xffffff;  break; //white
-			default: color = 0xffff00; break; //yellow
-		}
+		//switch(worldMap[mapX][mapY])
+		//{
+		//	case 1:  color = 0xff0000;  break; //red
+		//	case 2:  color = 0x00ff00;  break; //green
+		//	case 3:  color = 0x0000ff;   break; //blue
+		//	case 4:  color = 0xffffff;  break; //white
+		//	default: color = 0xffff00; break; //yellow
+		//}
+		if (a->map[mapX][mapY] == '1')
+			color = 0x0000ff;
 		if (side == 1)
 			color = color / 2;
 		while (drawStart < drawEnd)

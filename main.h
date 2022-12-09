@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/09 19:32:57 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 01:52:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_vec2
 
 typedef struct s_player
 {
+	char	player_dir;
 	double	row;
 	double	col;
 	t_vec2	dir;
@@ -74,7 +75,6 @@ typedef struct s_data
 	char		**map;
 	int			map_width;
 	int			map_height;
-	char		player_dir;
 	char		**view;
 	t_screen	sc;
 	t_img		img;

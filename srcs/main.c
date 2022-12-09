@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/09 19:34:05 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 01:28:13 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("validate_data error\n", 2);
 		return (1);
 	} // parsing
-	data.player.row = 22;
-	data.player.col = 12;
-	data.player.dir.x = -1;
-	data.player.dir.y = 0;
-	data.player.plane.x = 0;
-	data.player.plane.y = 0.66;
+	
 	data.sc.mlx = mlx_init();
 	data.sc.mlx_win = mlx_new_window(data.sc.mlx, screenWidth, screenHeight, "hi");
 	data.img.ptr = mlx_new_image(data.sc.mlx, screenWidth, screenHeight);
