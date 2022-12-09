@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 01:52:18 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 01:54:56 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 #define screenWidth 1024
 #define screenHeight 1024
-
-extern int worldMap[24][24];
 
 typedef enum e_list_of_key_code
 {
