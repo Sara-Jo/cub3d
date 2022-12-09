@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/08 17:06:44 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/09 18:11:13 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	**load_map(char **raw, int depth)
 	return (map);
 }
 
-static void	player_pos(char **map, t_data *data)
+static void	player_pos(char **map, t_position *player, t_data *a)
 {
 	char *line;
 	int	x;
@@ -75,9 +75,9 @@ static void	player_pos(char **map, t_data *data)
 		{
 			if (*line == 'N' || *line == 'S' || *line == 'E' || *line == 'W')
 			{
-				data->player.row = y;
-				data->player.col = x;
-				data->player_dir = *line;
+				player->row = y;
+				player->col = x;
+				a->player_dir = *line;
 			}
 			line++;
 			x++;
@@ -110,6 +110,6 @@ int	validate_data(char **raw, t_data *data)
 	}
 	data->map = load_map(&raw[i], 0);
 	free(raw);
-	player_pos(data->map, data);
+	player_pos(data->map, &data->player, data);
 	return (0);
 }

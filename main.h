@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/08 20:03:27 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/09 19:32:57 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #define screenWidth 1024
 #define screenHeight 1024
 
+extern int worldMap[24][24];
+
 typedef enum e_list_of_key_code
 {
 	KEY_W = 13,
@@ -32,11 +34,19 @@ typedef enum e_list_of_key_code
 	X_EVENT_KEY_EXIT = 17
 }	t_key_code;
 
-typedef struct s_position
+typedef struct s_vec2
 {
-	int	row;
-	int	col;
-}	t_position;
+	double x;
+	double y;
+}	t_vec2;
+
+typedef struct s_player
+{
+	double	row;
+	double	col;
+	t_vec2	dir;
+	t_vec2	plane;
+}	t_player;
 
 typedef struct s_img
 {
@@ -68,7 +78,7 @@ typedef struct s_data
 	char		**view;
 	t_screen	sc;
 	t_img		img;
-	t_position	player;
+	t_player	player;
 }	t_data;
 
 char	*get_next_line(int fd);
