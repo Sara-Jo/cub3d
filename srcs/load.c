@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 19:00:06 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 22:26:31 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ static char	**load_map(char **raw, int depth)
 
 static void	map_read(char **map, t_player *player)
 {
-	char *line;
-	int	x;
-	int y;
-	
+	char	*line;
+	int		x;
+	int		y;
+
 	player->dir = vec2(-1.0, 0.0);
 	player->plane = vec2(0.0, 0.66);
 	x = 0;

@@ -6,7 +6,7 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/10 18:53:08 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/11 01:12:04 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ $(NAME) : $(OBJECTS) $(LIBFT) $(MINILIBX)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIB)
 
 clean :
-	$(RM) $(OBJECTS)
+	$(RM) $(OBJECTS) $(DEPENDS)
+	@rmdir $(OBJS_DIR)
 
 fclean :
 	@make clean

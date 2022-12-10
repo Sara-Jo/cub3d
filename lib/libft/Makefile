@@ -6,7 +6,7 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/29 11:58:47 by hossong           #+#    #+#              #
-#    Updated: 2022/06/15 23:36:47 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/11 01:10:54 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ clean	:
 			$(RM) $(RMFLAGS) $(OBJS) $(BONUSOBJS)
 
 fclean	:	
+			clean
 			$(RM) $(RMFLAGS) $(NAME)
 
 re		:	
