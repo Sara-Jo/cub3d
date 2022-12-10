@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 02:03:40 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/11 02:27:21 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	render(t_data *a)
 
 	ft_bzero(a->img.addr, WIDTH * HEIGHT * a->img.bits_per_pixel / 8);
 	i = 0;
-                                                                     	while (i < WIDTH)
+	while (i < WIDTH)
 	{
 		cam_x = 2 * i / (double)WIDTH - 1;
 		ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, cam_x));
