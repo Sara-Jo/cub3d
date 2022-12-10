@@ -6,13 +6,13 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/10 01:52:08 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/10 17:50:44 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CFLAGS = -Wall -Werror -Wextra -g3
-SRCS = main.c utils.c render.c load.c hook.c
+SRCS = main.c utils.c render.c load.c hook.c vec.c
 SRCS_DIR = srcs
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=%.o)

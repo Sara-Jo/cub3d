@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 17:17:18 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 17:44:46 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,8 @@
 
 static void left_right_key(t_player *p, double rot_speed)
 {
-	double	old_dir_x;
-	double	old_plane_x;
-	
-	old_dir_x = p->dir.x;
-	old_plane_x = p->plane.x;
-	p->dir.x = p->dir.x * cos(rot_speed) - p->dir.y * sin(rot_speed);
-	p->dir.y = old_dir_x * sin(rot_speed) + p->dir.y * cos(rot_speed);
-	p->plane.x = p->plane.x * cos(rot_speed) - p->plane.y * sin(rot_speed);
-	p->plane.y = old_plane_x * sin(rot_speed) + p->plane.y * cos(rot_speed);
+	p->dir = v_rotate(&p->dir, rot_speed);
+	p->plane = v_rotate(&p->plane, rot_speed);
 }
 
 int	handle_key_down(int keycode, t_data *param)

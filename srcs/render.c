@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 16:48:46 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 17:50:53 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,30 @@ void	view_north(t_data *a)
 
 void	render(t_data *a)
 {
-	// double time = 0; //time of current frame
-	// double oldTime = 0; //time of previous frame
-	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
 	int mapX;
 	int mapY;
 	double sideDistX;
 	double sideDistY;
 	double deltaDistX;
 	double deltaDistY;
+	t_vec2	ray_dir;
+	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
 	int	i = 0;
 	while (i < screenWidth)
 	{
 		double camX = 2 * i / (double)screenWidth - 1;
-		double rayDirX = a->player.dir.x + a->player.plane.x * camX;
-		double rayDirY = a->player.dir.y + a->player.plane.y * camX;
+		ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, camX));
 		mapX = (int)a->player.row;
 		mapY = (int)a->player.col;
-		deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-		deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+		deltaDistX = (ray_dir.x == 0) ? 1e30 : fabs(1 / ray_dir.x);
+		deltaDistY = (ray_dir.y == 0) ? 1e30 : fabs(1 / ray_dir.y);
 		double perpWallDist;
 		int stepX;
 		int stepY;
 
 		int hit = 0;
 		int side;
-		if (rayDirX < 0)
+		if (ray_dir.x < 0)
 		{
 			stepX = -1;
 			sideDistX = (a->player.row - mapX) * deltaDistX;
@@ -87,7 +85,7 @@ void	render(t_data *a)
 			stepX = 1;
 			sideDistX = (mapX + 1.0 - a->player.row) * deltaDistX;
 		}
-		if (rayDirY < 0)
+		if (ray_dir.y < 0)
 		{
 			stepY = -1;
 			sideDistY = (a->player.col - mapY) * deltaDistY;
@@ -115,9 +113,9 @@ void	render(t_data *a)
 				hit = 1;
 		}
 		if (side == 0)
-			perpWallDist = (mapX - a->player.row + (1 - stepX) / 2) / rayDirX;
+			perpWallDist = (mapX - a->player.row + (1 - stepX) / 2) / ray_dir.x;
 		else
-			perpWallDist = (mapY - a->player.col + (1 - stepY) / 2) / rayDirY;
+			perpWallDist = (mapY - a->player.col + (1 - stepY) / 2) / ray_dir.y;
 
 		int lineHeihgt = (int)(screenHeight / perpWallDist);
 		int drawStart = -lineHeihgt / 2 + screenHeight / 2;
