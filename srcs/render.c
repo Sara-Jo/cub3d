@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 01:22:56 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 16:48:46 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	view_north(t_data *a)
 			if (a->map[player_row][i] == '1') {
 				distance_from_player = a->player.row - player_row;
 				my_mlx_pixel_put(&a->img, player_row, i, 0xff0000);
+				(void) distance_from_player;
 			}
 			else if (a->map[player_row][i] == '0')
 				my_mlx_pixel_put(&a->img, player_row, i, 0x00ff00);
@@ -126,14 +127,6 @@ void	render(t_data *a)
 		if (drawEnd >= screenHeight)
 			drawEnd = screenHeight - 1;
 		int color;
-		//switch(worldMap[mapX][mapY])
-		//{
-		//	case 1:  color = 0xff0000;  break; //red
-		//	case 2:  color = 0x00ff00;  break; //green
-		//	case 3:  color = 0x0000ff;   break; //blue
-		//	case 4:  color = 0xffffff;  break; //white
-		//	default: color = 0xffff00; break; //yellow
-		//}
 		if (a->map[mapX][mapY] == '1')
 			color = 0x0000ff;
 		if (side == 1)

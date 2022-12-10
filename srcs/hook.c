@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 01:51:09 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 17:17:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,28 @@ static void left_right_key(t_player *p, double rot_speed)
 int	handle_key_down(int keycode, t_data *param)
 {
 	double moveSpeed = 0.02 * 5.0;
-	double rotSpeed = 0.02 * 3.0;
-	int	x;
-	int	y;
+	double rotSpeed = M_PI / 18.0; // 180/18.0 10deg
+	int	up_x;
+	int	up_y;
+	int down_x;
+	int down_y;
 
-	x = param->player.row + param->player.dir.x * moveSpeed;
-	y = param->player.col + param->player.dir.y * moveSpeed;
+	up_x = param->player.row + param->player.dir.x * moveSpeed;
+	up_y = param->player.col + param->player.dir.y * moveSpeed;
+	down_x = param->player.row - param->player.dir.x * moveSpeed;
+	down_y = param->player.col - param->player.dir.y * moveSpeed;
 	if (keycode == KEY_W)
 	{
-		if (param->map[x][(int)param->player.col] != '1')
+		if (param->map[up_x][(int)param->player.col] != '1')
 			param->player.row += param->player.dir.x * moveSpeed;
-		if (param->map[(int)param->player.row][y] != '1')
+		if (param->map[(int)param->player.row][up_y] != '1')
 			param->player.col += param->player.dir.y * moveSpeed;
 	}
 	else if (keycode == KEY_S)
 	{
-		if (param->map[x][(int)param->player.col] != '1')
+		if (param->map[down_x][(int)param->player.col] != '1')
 			param->player.row -= param->player.dir.x * moveSpeed;
-		if (param->map[(int)param->player.row][y] != '1')
+		if (param->map[(int)param->player.row][down_y] != '1')
 			param->player.col -= param->player.dir.y * moveSpeed;
 	}
 	else if (keycode == KEY_A)
