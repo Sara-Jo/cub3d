@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 19:06:32 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:25:31 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	handle_key_down(int keycode, t_data *param)
 {
 	double moveSpeed = 0.02 * 5.0;
-	double rad = M_PI / (180.0); // pi/180.0 1deg
+	double rad = M_PI / (18.0); // pi/18.0 1deg
 	int	up_x;
 	int	up_y;
 	int down_x;

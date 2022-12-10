@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 19:12:11 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:42:01 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ typedef enum e_list_of_key_code
 	X_EVENT_KEY_EXIT = 17
 }	t_key_code;
 
-typedef struct s_vec2
+struct s_d_xy
 {
 	double x;
 	double y;
-}	t_vec2;
+};
 
-typedef struct s_pos
+struct s_i_xy
 {
 	int	x;
 	int	y;
-}	t_pos;
+};
 
-typedef struct s_pos t_dist;
+typedef struct s_d_xy t_dist;
+typedef struct s_d_xy t_vec2;
+typedef struct s_i_xy t_pos;
 
 typedef struct s_player
 {
@@ -100,5 +102,7 @@ t_vec2	v_sum(t_vec2 v1, t_vec2 v2);
 t_vec2	v_rotate(t_vec2 *vec, double rad);
 void	rot_player(t_player *p, double rad);
 void	set_player(t_player *p, char dir, int x, int y, double rad);
+t_pos	set_pos(int x, int y);
+
 
 #endif

@@ -6,11 +6,20 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 18:51:42 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 18:55:08 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:33:24 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+t_pos	set_pos(int x, int y)
+{
+	t_pos	new;
+	
+	new.x = x;
+	new.y = y;
+	return (new);
+}
 
 void	rot_player(t_player *p, double rad)
 {

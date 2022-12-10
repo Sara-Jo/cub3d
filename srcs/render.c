@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 18:12:20 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:34:37 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,20 @@ void	view_north(t_data *a)
 
 void	render(t_data *a)
 {
-	int mapX;
-	int mapY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
+	t_pos	map;
+	t_dist	side_dist;
+	t_dist	delta_dist;
 	t_vec2	ray_dir;
+	
 	ft_bzero(a->img.addr, screenWidth * screenHeight * a->img.bits_per_pixel / 8);
 	int	i = 0;
 	while (i < screenWidth)
 	{
 		double camX = 2 * i / (double)screenWidth - 1;
 		ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, camX));
-		mapX = (int)a->player.row;
-		mapY = (int)a->player.col;
-		deltaDistX = (ray_dir.x == 0) ? 1e30 : fabs(1 / ray_dir.x);
-		deltaDistY = (ray_dir.y == 0) ? 1e30 : fabs(1 / ray_dir.y);
+		map = set_pos((int)a->player.row, (int)a->player.col);
+		delta_dist.x = (ray_dir.x == 0) ? 1e30 : fabs(1 / ray_dir.x);
+		delta_dist.y = (ray_dir.y == 0) ? 1e30 : fabs(1 / ray_dir.y);
 		double perpWallDist;
 		int stepX;
 		int stepY;
@@ -77,44 +74,44 @@ void	render(t_data *a)
 		if (ray_dir.x < 0)
 		{
 			stepX = -1;
-			sideDistX = (a->player.row - mapX) * deltaDistX;
+			side_dist.x = (a->player.row - map.x) * delta_dist.x;
 		}
 		else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - a->player.row) * deltaDistX;
+			side_dist.x = (map.x + 1.0 - a->player.row) * delta_dist.x;
 		}
 		if (ray_dir.y < 0)
 		{
 			stepY = -1;
-			sideDistY = (a->player.col - mapY) * deltaDistY;
+			side_dist.y = (a->player.col - map.y) * delta_dist.y;
 		}
 		else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - a->player.col) * deltaDistY;
+			side_dist.y = (map.y + 1.0 - a->player.col) * delta_dist.y;
 		}
 		while (hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (side_dist.x < side_dist.y)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
+				side_dist.x += delta_dist.x;
+				map.x += stepX;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
+				side_dist.y += delta_dist.y;
+				map.y += stepY;
 				side = 1;
 			}
-			if (a->map[mapX][mapY] == '1')
+			if (a->map[map.x][map.y] == '1')
 				hit = 1;
 		}
 		if (side == 0)
-			perpWallDist = (mapX - a->player.row + (1 - stepX) / 2) / ray_dir.x;
+			perpWallDist = side_dist.x - delta_dist.x;
 		else
-			perpWallDist = (mapY - a->player.col + (1 - stepY) / 2) / ray_dir.y;
+			perpWallDist = side_dist.y - delta_dist.y;
 
 		int lineHeihgt = (int)(screenHeight / perpWallDist);
 		int drawStart = -lineHeihgt / 2 + screenHeight / 2;
@@ -124,7 +121,7 @@ void	render(t_data *a)
 		if (drawEnd >= screenHeight)
 			drawEnd = screenHeight - 1;
 		int color;
-		if (a->map[mapX][mapY] == '1')
+		if (a->map[map.x][map.y] == '1')
 			color = 0x0000ff;
 		if (side == 1)
 			color = color / 2;
