@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 17:50:53 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 18:12:20 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	view_north(t_data *a)
 		}
 		player_row--;
 	}
-
 }
 
 void	render(t_data *a)

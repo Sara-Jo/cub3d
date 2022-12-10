@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 01:59:42 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:00:15 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 	if (fd == -1)
 		return (1);
 	raw = file_to_rawdata(fd, 0);
+	close(fd);
 	if (validate_data(raw, &data) == -1)
 	{
 		ft_putstr_fd("validate_data error\n", 2);

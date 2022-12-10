@@ -6,12 +6,13 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 18:06:43 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:00:06 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include <stdio.h>
+#include <math.h>
 
 int	access_file(char *file)
 {
@@ -66,6 +67,9 @@ static void	map_read(char **map, t_player *player)
 	char *line;
 	int	x;
 	int y;
+	
+	player->dir = vec2(-1.0, 0.0);
+	player->plane = vec2(0.0, 0.66);
 	x = 0;
 	while (*map)
 	{
@@ -74,37 +78,13 @@ static void	map_read(char **map, t_player *player)
 		while (*line)
 		{
 			if (*line == 'N')
-			{
-				player->player_dir = *line;
-				player->row = x;
-				player->col = y;
-				player->dir = vec2(-1.0, 0.0);
-				player->plane = vec2(0.0, 0.66);
-			}
+				set_player(player, *line, x, y, 0);
 			else if (*line == 'S')
-			{
-				player->player_dir = *line;
-				player->row = x;
-				player->col = y;
-				player->dir = vec2(1.0, 0.0);
-				player->plane = vec2(0.0, -0.66);
-			}
+				set_player(player, *line, x, y, M_PI);
 			else if (*line == 'E')
-			{
-				player->player_dir = *line;
-				player->row = y;
-				player->col = x;
-				player->dir = vec2(0.0, -1.0);
-				player->plane = vec2(0.66, 0.0);
-			}
+				set_player(player, *line, x, y, M_PI / (-2.0));
 			else if (*line == 'W')
-			{
-				player->player_dir = *line;
-				player->row = y;
-				player->col = x;
-				player->dir = vec2(0.0, 1.0);
-				player->plane = vec2(-0.66, 0.0);
-			}
+				set_player(player, *line, x, y, M_PI / (2.0));
 			line++;
 			y++;
 		}

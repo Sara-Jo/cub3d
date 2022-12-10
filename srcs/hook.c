@@ -6,23 +6,17 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 17:59:29 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 19:06:32 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include <math.h>
 
-static void rot_dir_plane(t_player *p, double rot_speed)
-{
-	p->dir = v_rotate(&p->dir, rot_speed);
-	p->plane = v_rotate(&p->plane, rot_speed);
-}
-
 int	handle_key_down(int keycode, t_data *param)
 {
 	double moveSpeed = 0.02 * 5.0;
-	double rotSpeed = M_PI / 18.0; // 180/18.0 10deg
+	double rad = M_PI / (180.0); // pi/180.0 1deg
 	int	up_x;
 	int	up_y;
 	int down_x;
@@ -47,17 +41,9 @@ int	handle_key_down(int keycode, t_data *param)
 			param->player.col -= param->player.dir.y * moveSpeed;
 	}
 	else if (keycode == KEY_A)
-	{
-		if (param->player.player_dir == 'E' || param->player.player_dir == 'W')
-			rotSpeed *= -1;
-		rot_dir_plane(&param->player, rotSpeed);
-	}
+		rot_player(&param->player, rad);
 	else if (keycode == KEY_D)
-	{
-		if (param->player.player_dir == 'E' || param->player.player_dir == 'W')
-			rotSpeed *= -1;
-		rot_dir_plane(&param->player, -rotSpeed);
-	}
+		rot_player(&param->player, -rad);
 	render(param);
 	return (0);
 }
