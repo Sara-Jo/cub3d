@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 02:00:06 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/10 18:06:43 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,57 +66,49 @@ static void	map_read(char **map, t_player *player)
 	char *line;
 	int	x;
 	int y;
-	y = 0;
+	x = 0;
 	while (*map)
 	{
-		x = 0;
+		y = 0;
 		line = *map;
 		while (*line)
 		{
 			if (*line == 'N')
 			{
 				player->player_dir = *line;
-				player->row = y;
-				player->col = x;
-				player->dir.x = -1;
-				player->dir.y = 0;
-				player->plane.x = 0;
-				player->plane.y = 0.66;
+				player->row = x;
+				player->col = y;
+				player->dir = vec2(-1.0, 0.0);
+				player->plane = vec2(0.0, 0.66);
 			}
 			else if (*line == 'S')
 			{
 				player->player_dir = *line;
-				player->row = y;
-				player->col = x;
-				player->dir.x = 1;
-				player->dir.y = 0;
-				player->plane.x = 0;
-				player->plane.y = -0.66;
+				player->row = x;
+				player->col = y;
+				player->dir = vec2(1.0, 0.0);
+				player->plane = vec2(0.0, -0.66);
 			}
 			else if (*line == 'E')
 			{
 				player->player_dir = *line;
 				player->row = y;
 				player->col = x;
-				player->dir.x = 0;
-				player->dir.y = -1;
-				player->plane.x = 0.66;
-				player->plane.y = 0;
+				player->dir = vec2(0.0, -1.0);
+				player->plane = vec2(0.66, 0.0);
 			}
 			else if (*line == 'W')
 			{
 				player->player_dir = *line;
 				player->row = y;
 				player->col = x;
-				player->dir.x = 0;
-				player->dir.y = 1;
-				player->plane.x = -0.66;
-				player->plane.y = 0;
+				player->dir = vec2(0.0, 1.0);
+				player->plane = vec2(-0.66, 0.0);
 			}
 			line++;
-			x++;
+			y++;
 		}
-		y++;
+		x++;
 		map++;
 	}
 }
