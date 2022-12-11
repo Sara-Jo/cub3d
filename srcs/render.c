@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:45 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 01:21:03 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	render(t_data *a)
 		{
 			color = 0xffff00;
 			my_mlx_pixel_put(&a->img, y, x, color);
-			color = 0x0000ff;
+			color = 0xff00ff;
 			my_mlx_pixel_put(&a->img, y, HEIGHT - x - 1, color);
 			y++;
 		}

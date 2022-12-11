@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 01:00:41 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 01:56:33 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,18 @@ void	cast_wall(t_data *a)
 		{
 			int tex_y = (int)tex_pos & (TEXHEIGHT - 1);
 			tex_pos += step;
-			color = texture[0][TEXHEIGHT * tex_y + tex_x];
 			if (ele.side == 1)
-				color = (color >> 1) & 8355711;
+			{
+				color = texture[2][TEXHEIGHT * tex_y + tex_x];
+				if (ray_dir.y < 0)
+					color = texture[5][TEXHEIGHT * tex_y + tex_x];
+			}
+			else
+			{
+				color = texture[7][TEXHEIGHT * tex_y + tex_x];
+				if (ray_dir.x < 0)
+					color = texture[0][TEXHEIGHT * tex_y + tex_x];
+			}
 			my_mlx_pixel_put(&a->img, i, draw_start, color);
 			draw_start++;
 		}
