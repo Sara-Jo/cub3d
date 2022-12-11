@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 22:26:31 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 00:13:34 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	access_file(char *file)
 		perror(file);
 		return (-1);
 	}
-	if (ft_strncmp(ft_strchr(file, '.'), ".cub", 5) != 0)
+	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
 	{
 		ft_putstr_fd("no .cub\n", 2);
 		return (-1);
@@ -68,8 +68,6 @@ static void	map_read(char **map, t_player *player)
 	int		x;
 	int		y;
 
-	player->dir = vec2(-1.0, 0.0);
-	player->plane = vec2(0.0, 0.66);
 	x = 0;
 	while (*map)
 	{
@@ -78,13 +76,13 @@ static void	map_read(char **map, t_player *player)
 		while (*line)
 		{
 			if (*line == 'N')
-				set_player(player, *line, x, y, 0);
+				*player = set_player(*line, x, y, 0);
 			else if (*line == 'S')
-				set_player(player, *line, x, y, M_PI);
+				*player = set_player(*line, x, y, M_PI);
 			else if (*line == 'E')
-				set_player(player, *line, x, y, M_PI / (-2.0));
+				*player = set_player(*line, x, y, M_PI / (-2.0));
 			else if (*line == 'W')
-				set_player(player, *line, x, y, M_PI / (2.0));
+				*player = set_player(*line, x, y, M_PI / (2.0));
 			line++;
 			y++;
 		}
