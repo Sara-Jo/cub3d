@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 02:27:21 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/11 16:30:35 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,23 +100,31 @@ void	draw_line(int i, t_render *ele, t_data *a)
 
 void	render(t_data *a)
 {
-	t_vec2		ray_dir;
-	t_dist3		dist;
-	t_render	ele;
-	double		cam_x;
-	int			i;
-
 	ft_bzero(a->img.addr, WIDTH * HEIGHT * a->img.bits_per_pixel / 8);
-	i = 0;
-	while (i < WIDTH)
-	{
-		cam_x = 2 * i / (double)WIDTH - 1;
-		ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, cam_x));
-		ele.map = set_pos((int)a->player.row, (int)a->player.col);
-		set_dist3(&dist, &ray_dir, ele.map, &a->player);
-		calc_perpenducular(&ele, &dist, a->map);
-		draw_line(i, &ele, a);
-		i++;
+	{ // TODO: ceil
+
+	}
+	{ // TODO: floor
+
+	}
+	{ //TODO: wall 분리, texture 추가 
+		t_vec2		ray_dir;
+		t_dist3		dist;
+		t_render	ele;
+		double		cam_x;
+		int			i;
+		
+		i = 0;
+		while (i < WIDTH)
+		{
+			cam_x = 2 * i / (double)WIDTH - 1;
+			ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, cam_x));
+			ele.map = set_pos((int)a->player.row, (int)a->player.col);
+			set_dist3(&dist, &ray_dir, ele.map, &a->player);
+			calc_perpenducular(&ele, &dist, a->map);
+			draw_line(i, &ele, a);
+			i++;
+		}
 	}
 	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
 }

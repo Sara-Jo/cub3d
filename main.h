@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 01:29:44 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/11 16:28:19 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_dist3
 	t_dist	step;
 }	t_dist3;
 
-typedef struct s_render
+typedef struct s_render //TODO: 구조체 이름 수정하기
 {
 	t_pos	map;
 	double	perp_wall_dist;
