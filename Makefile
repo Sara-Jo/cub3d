@@ -6,7 +6,7 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/11 23:54:17 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/12 00:21:51 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ DEPENDS = $(patsubst %.d, $(OBJS_DIR)/%.d, $(DEPS))
 LIBFT = lib/libft/libft.a
 MINILIBX = lib/minilibx/libmlx.a
 INCLUDE = -I include/ -I $(dir $(LIBFT)) -I $(dir $(MINILIBX))
-LIB = -L $(dir $(LIBFT)) -lft -L $(dir $(MINILIBX)) -lmlx -framework OpenGL -framework AppKit -lm
+LIB = -L $(dir $(LIBFT)) -lft -framework OpenGL -framework AppKit \
+		-L $(dir $(MINILIBX)) -lmlx -lm
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
