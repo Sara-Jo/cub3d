@@ -6,32 +6,13 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:16:43 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 01:00:41 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "main.h"
 #include <math.h>
-
-void	make_texture(unsigned int *texture)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < TEXWIDTH)
-	{
-		y = 0;
-		while (y < TEXHEIGHT)
-		{
-			texture[TEXWIDTH * y + x] = \
-				65536 * 100 * (x != y && x != TEXWIDTH - y);
-			y++;
-		}
-		x++;
-	}
-}
 
 void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 {
@@ -107,14 +88,14 @@ void	draw_line(int i, t_wall *ele, t_data *a)
 	}
 }
 
-void	draw_wall(t_data *a)
+void	cast_wall(t_data *a)
 {
 	t_vec2		ray_dir;
 	t_dist3		dist;
 	t_wall		ele;
 	double		cam_x;
 	int			i;
-	unsigned int	texture[TEXHEIGHT * TEXWIDTH];
+	unsigned int	texture[8][TEXHEIGHT * TEXWIDTH];
 
 	make_texture(texture);
 	i = 0;
@@ -150,7 +131,7 @@ void	draw_wall(t_data *a)
 		{
 			int tex_y = (int)tex_pos & (TEXHEIGHT - 1);
 			tex_pos += step;
-			color = texture[TEXHEIGHT * tex_y + tex_x];
+			color = texture[0][TEXHEIGHT * tex_y + tex_x];
 			if (ele.side == 1)
 				color = (color >> 1) & 8355711;
 			my_mlx_pixel_put(&a->img, i, draw_start, color);

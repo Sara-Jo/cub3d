@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 17:37:27 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/10 22:27:30 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 00:44:06 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ t_vec2	v_sum(t_vec2 v1, t_vec2 v2)
 
 	new.x = v1.x + v2.x;
 	new.y = v1.y + v2.y;
+	return (new);
+}
+
+t_vec2	v_diff(t_vec2 v1, t_vec2 v2)
+{
+	t_vec2	new;
+
+	new.x = v1.x - v2.x;
+	new.y = v1.y - v2.y;
 	return (new);
 }
 

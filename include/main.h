@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:11:10 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 01:00:10 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			access_file(char *file);
 char		**file_to_rawdata(int fd, int depth);
 int			validate_data(char **raw, t_data *data);
 int			handle_key_down(int keycode, t_data *param);
-void		draw_wall(t_data *a);
+void		cast_wall(t_data *a);
+void		make_texture(unsigned int texture[8][TEXHEIGHT * TEXWIDTH]);
 
 #endif

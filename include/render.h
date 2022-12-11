@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:33:50 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:11:14 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 00:43:35 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_player
 t_vec2		vec2(double x, double y);
 t_vec2		v_multiple(t_vec2 v, double k);
 t_vec2		v_sum(t_vec2 v1, t_vec2 v2);
+t_vec2		v_diff(t_vec2 v1, t_vec2 v2);
 t_vec2		v_rotate(t_vec2 *vec, double rad);
 void		rot_player(t_player *p, double rad);
 t_player	set_player(char dir, int x, int y, double rad);
