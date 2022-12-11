@@ -6,13 +6,12 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 01:06:46 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 00:16:28 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "mlx.h"
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {

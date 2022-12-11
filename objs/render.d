@@ -1,1 +1,2 @@
-objs/render.o: srcs/render.c main.h lib/libft/libft.h lib/minilibx/mlx.h
+objs/render.o: srcs/render.c include/main.h lib/libft/libft.h \
+  include/render.h lib/minilibx/mlx.h

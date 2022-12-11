@@ -6,13 +6,13 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/11 16:25:05 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/11 23:54:17 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CFLAGS = -Wall -Werror -Wextra -g3
-SRCS = main.c utils.c render.c load.c hook.c vec.c player.c
+SRCS = main.c utils.c render.c load.c hook.c vec.c player.c wall.c
 SRCS_DIR = srcs
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=%.o)
@@ -22,7 +22,7 @@ DEPENDS = $(patsubst %.d, $(OBJS_DIR)/%.d, $(DEPS))
 
 LIBFT = lib/libft/libft.a
 MINILIBX = lib/minilibx/libmlx.a
-INCLUDE = -I. -I $(dir $(LIBFT)) -I $(dir $(MINILIBX))
+INCLUDE = -I include/ -I $(dir $(LIBFT)) -I $(dir $(MINILIBX))
 LIB = -L $(dir $(LIBFT)) -lft -L $(dir $(MINILIBX)) -lmlx -framework OpenGL -framework AppKit -lm
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
@@ -46,7 +46,7 @@ fclean : clean
 
 re	:
 	@make fclean
-	@make -C $(dir $(MINILIBX)) fclean
+	@make -C $(dir $(MINILIBX)) clean
 	@make -C $(dir $(LIBFT)) fclean
 	@make all
 

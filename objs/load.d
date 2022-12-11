@@ -1,1 +1,2 @@
-objs/load.o: srcs/load.c main.h lib/libft/libft.h
+objs/load.o: srcs/load.c include/main.h lib/libft/libft.h \
+  include/render.h

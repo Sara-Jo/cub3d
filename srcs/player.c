@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 18:51:42 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 01:28:45 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/11 22:50:45 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,17 @@ void	rot_player(t_player *p, double rad)
 	p->plane = v_rotate(&p->plane, rad);
 }
 
-void	set_player(t_player *p, char dir, int x, int y, double rad)
+t_player	set_player(char dir, int x, int y, double rad)
 {
-	p->player_dir = dir;
-	p->row = x;
-	p->col = y;
-	rot_player(p, rad);
+	t_player	new;
+
+	new.dir = vec2(-1.0, 0.0);
+	new.plane = vec2(0.0, 0.66);
+	new.player_dir = dir;
+	new.row = x;
+	new.col = y;
+	rot_player(&new, rad);
+	return (new);
 }
 
 void	view_north(t_data *a)

@@ -1,1 +1,2 @@
-objs/main.o: srcs/main.c main.h lib/libft/libft.h lib/minilibx/mlx.h
+objs/main.o: srcs/main.c include/main.h lib/libft/libft.h \
+  include/render.h lib/minilibx/mlx.h
