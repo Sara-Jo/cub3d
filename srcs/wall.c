@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 01:56:33 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 02:15:40 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 	}
 }
 
-void	calc_perpenducular(t_wall *ele, t_dist3 *dist, char **world)
+void	calc_perpendicular(t_wall *ele, t_dist3 *dist, char **world)
 {
 	int		hit;
 
@@ -105,7 +105,7 @@ void	cast_wall(t_data *a)
 		ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, cam_x));
 		ele.map = set_pos((int)a->player.row, (int)a->player.col);
 		set_dist3(&dist, &ray_dir, ele.map, &a->player);
-		calc_perpenducular(&ele, &dist, a->map);
+		calc_perpendicular(&ele, &dist, a->map);
 		//draw_line(i, &ele, a);
 		int	line_height;
 		int	color;
@@ -133,9 +133,9 @@ void	cast_wall(t_data *a)
 			tex_pos += step;
 			if (ele.side == 1)
 			{
-				color = texture[2][TEXHEIGHT * tex_y + tex_x];
+				color = texture[3][TEXHEIGHT * tex_y + tex_x];
 				if (ray_dir.y < 0)
-					color = texture[5][TEXHEIGHT * tex_y + tex_x];
+					color = texture[6][TEXHEIGHT * tex_y + tex_x];
 			}
 			else
 			{
