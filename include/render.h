@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:33:50 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 16:44:48 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 19:57:28 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,25 @@ typedef struct s_dist3
 	t_dist	step;
 }	t_dist3;
 
-typedef struct s_wall //TODO: 구조체 이름 수정하기
+typedef struct s_cast //TODO: 구조체 이름 수정하기
 {
 	t_pos	map;
+	t_vec2	ray_dir;
+	t_dist3	dist;
 	double	perp_wall_dist;
 	int		side;
-}	t_wall;
+}	t_cast;
+
+typedef struct s_draw
+{
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	double	wall_x;
+	int		tex_x;
+	double	step;
+	double	tex_pos;
+}	t_draw;
 
 typedef struct s_player
 {

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 16:23:52 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 20:41:12 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 
 int	handle_key_down(int keycode, t_data *param)
 {
-	double moveSpeed = 0.02 * 5.0;
-	double rad = M_PI / (18.0); // pi/18.0 1deg
-	int	up_x;
-	int	up_y;
-	int down_x;
-	int down_y;
+	double 	moveSpeed = 0.02 * 5.0;
+	double 	rad = M_PI / (18.0); // pi/18.0 1deg
+	t_pos	up;
+	t_pos	down;
+	
+	up = set_pos(param->player.row + param->player.dir.x * moveSpeed, \
+					param->player.col + param->player.dir.y * moveSpeed);
 
-	up_x = param->player.row + param->player.dir.x * moveSpeed;
-	up_y = param->player.col + param->player.dir.y * moveSpeed;
+	up_x = ;
+	up_y = ;
 	down_x = param->player.row - param->player.dir.x * moveSpeed;
 	down_y = param->player.col - param->player.dir.y * moveSpeed;
 	if (keycode == KEY_W)

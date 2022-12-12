@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 01:00:10 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 20:11:55 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef enum e_list_of_key_code
 	KEY_S = 1,
 	KEY_A = 0,
 	KEY_D = 2,
+	KEY_AR_L = 123,
+	KEY_AR_R = 124,
 	KEY_ESC = 53,
 	X_EVENT_KEY_PRESS = 2,
 	X_EVENT_KEY_EXIT = 17
