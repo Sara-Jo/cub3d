@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 16:30:38 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 19:46:52 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ int	validate_data(char **raw, t_data *data)
 	while (raw[i] && i < 6)
 	{
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture_no = raw[i];
+			data->texture[0] = raw[i];
 		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture_so = raw[i];
+			data->texture[1] = raw[i];
 		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture_we = raw[i];
+			data->texture[2] = raw[i];
 		else if (ft_strnstr(raw[i], "EA", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture_ea = raw[i];
+			data->texture[3] = raw[i];
 		else if (ft_strnstr(raw[i], "F", 1) && ft_isspace(*(raw[i] + 1)))
 			data->f_color = 1;
 		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
