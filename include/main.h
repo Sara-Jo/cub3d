@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 20:37:09 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/12 22:21:41 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ typedef struct s_data
 	int			map_width;
 	int			map_height;
 	char		**view;
-	void 		*mlx;
-    void		*win;
 	t_screen	sc;
 	t_img		img;
 	t_player	player;

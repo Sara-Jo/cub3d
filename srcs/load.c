@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 19:46:52 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/12 22:00:21 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char	**file_to_rawdata(int fd, int depth)
 	char	**des;
 	char	*line;
 
-	des = 0;
+	des = NULL;
 	line = get_next_line(fd);
 	if (line == NULL)
-		des = (char **)malloc(sizeof(char *) * depth);
+		des = (char **)malloc(sizeof(char *) * (depth + 1));
 	else
 		des = file_to_rawdata(fd, depth + 1);
 	if (des)
@@ -54,7 +54,7 @@ static char	**load_map(char **raw, int depth)
 
 	map = 0;
 	if (*raw == NULL)
-		map = (char **)malloc(sizeof(char *) * depth);
+		map = (char **)malloc(sizeof(char *) * (depth + 1));
 	else
 		map = load_map(raw + 1, depth + 1);
 	if (map)
@@ -98,14 +98,18 @@ int	validate_data(char **raw, t_data *data)
 	i = 0;
 	while (raw[i] && i < 6)
 	{
+		
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture[0] = raw[i];
+		{
+			data->texture[0] = ft_strtrim(raw[i] + 3, "\n");
+			free(raw[i]);
+		}
 		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture[1] = raw[i];
+			data->texture[1] = ft_strtrim(raw[i] + 3, "\n");
 		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture[2] = raw[i];
+			data->texture[2] = ft_strtrim(raw[i] + 3, "\n");
 		else if (ft_strnstr(raw[i], "EA", 2) && ft_isspace(*(raw[i] + 2)))
-			data->texture[3] = raw[i];
+			data->texture[3] = ft_strtrim(raw[i] + 3, "\n");
 		else if (ft_strnstr(raw[i], "F", 1) && ft_isspace(*(raw[i] + 1)))
 			data->f_color = 1;
 		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
@@ -113,7 +117,6 @@ int	validate_data(char **raw, t_data *data)
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
-	free(raw);
 	map_read(data->map, &data->player);
 	return (0);
 }

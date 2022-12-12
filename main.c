@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:00:40 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/12 14:57:46 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/12 22:19:34 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,7 +371,7 @@ void load_texture(t_info *info)
 {
 	t_img img;
 
-	load_image(info, info->texture[0], "textures/eagle.xpm", &img);
+	load_image(info, info->texture[0], "./textures/eagle.xpm", &img);
 	load_image(info, info->texture[1], "textures/redbrick.xpm", &img);
 	load_image(info, info->texture[2], "textures/purplestone.xpm", &img);
 	load_image(info, info->texture[3], "textures/greystone.xpm", &img);

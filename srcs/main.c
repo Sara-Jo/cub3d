@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 20:37:38 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/12 21:56:04 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "mlx.h"
-
+#include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_data	data;
