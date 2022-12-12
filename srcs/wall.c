@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 20:39:05 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/13 01:18:08 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ void	cast_wall(t_data *a)
 	t_wall		ele;
 	double		cam_x;
 	int			i;
-	unsigned int	texture[8][TEXHEIGHT * TEXWIDTH];
 
-	make_texture(a);
 	i = 0;
 	while (i < WIDTH)
 	{
@@ -136,15 +134,15 @@ void	cast_wall(t_data *a)
 			tex_pos += step;
 			if (ele.side == 1)
 			{
-				color = texture[0][TEXHEIGHT * tex_y + tex_x];
+				color = a->tex_addr[0][TEXHEIGHT * tex_y + tex_x];
 				if (ray_dir.y < 0)
-					color = texture[1][TEXHEIGHT * tex_y + tex_x];
+					color = a->tex_addr[1][TEXHEIGHT * tex_y + tex_x];
 			}
 			else
 			{
-				color = texture[2][TEXHEIGHT * tex_y + tex_x];
+				color = a->tex_addr[2][TEXHEIGHT * tex_y + tex_x];
 				if (ray_dir.x < 0)
-					color = texture[3][TEXHEIGHT * tex_y + tex_x];
+					color = a->tex_addr[3][TEXHEIGHT * tex_y + tex_x];
 			}
 			my_mlx_pixel_put(&a->img, i, draw_start, color);
 			draw_start++;

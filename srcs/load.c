@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 22:00:21 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 01:52:25 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ static char	**load_map(char **raw, int depth)
 	else
 		map = load_map(raw + 1, depth + 1);
 	if (map)
-		map[depth] = *raw;
+	{
+		map[depth] = NULL;
+		if (*raw)
+			map[depth] = ft_strdup(*raw);
+	}
 	return (map);
 }
 
@@ -94,16 +98,13 @@ static void	map_read(char **map, t_player *player)
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
+	int		j;
 
 	i = 0;
 	while (raw[i] && i < 6)
 	{
-		
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
-		{
 			data->texture[0] = ft_strtrim(raw[i] + 3, "\n");
-			free(raw[i]);
-		}
 		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
 			data->texture[1] = ft_strtrim(raw[i] + 3, "\n");
 		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
@@ -116,7 +117,14 @@ int	validate_data(char **raw, t_data *data)
 			data->c_color = 1;
 		i++;
 	}
+	j = 0;
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
+	while (*raw)
+	{
+		free(*raw);
+		raw++;
+	}
+	free(raw);
 	return (0);
 }

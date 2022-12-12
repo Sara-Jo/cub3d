@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 22:21:41 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 02:38:09 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,8 @@ typedef struct s_img
 
 typedef struct s_data
 {
-	// char		*texture_ea;
-	// char		*texture_we;
-	// char		*texture_so;
-	// char		*texture_no;
-	char 		*texture[4];
+	char		*texture[4];
+	int			**tex_addr;
 	int			f_color;
 	int			c_color;
 	char		**map;
@@ -77,6 +74,6 @@ char		**file_to_rawdata(int fd, int depth);
 int			validate_data(char **raw, t_data *data);
 int			handle_key_down(int keycode, t_data *param);
 void		cast_wall(t_data *a);
-unsigned int	**make_texture(t_data *a);
+void		make_texture(t_data *a);
 
 #endif
