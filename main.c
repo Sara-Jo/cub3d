@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:00:40 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/11 23:50:06 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/13 02:17:50 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "./key_macos.h"
-
+#include <stdio.h>
 int worldMap[24][24] =
 	{
 		{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 4, 6, 4, 4, 6, 4, 6, 4, 4, 4, 6, 4},
@@ -353,32 +353,32 @@ int key_press(int key, t_info *info)
 	return (0);
 }
 
-void load_image(t_info *info, int *texture, char *path, t_img *img)
+void load_image(t_info *info, int *texture, char *path)
 {
-	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
-	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size_l, &img->endian);
-	for (int y = 0; y < img->img_height; y++)
+	t_img img;
+	int	*data;
+	img.img = mlx_xpm_file_to_image(info->mlx, path, &img.img_width, &img.img_height);
+	data = (int *)mlx_get_data_addr(img.img, &img.bpp, &img.size_l, &img.endian);
+	for (int y = 0; y < img.img_height; y++)
 	{
-		for (int x = 0; x < img->img_width; x++)
-		{
-			texture[img->img_width * y + x] = img->data[img->img_width * y + x];
-		}
+		for (int x = 0; x < img.img_width; x++)
+			texture[img.img_width * y + x] = data[img.img_width * y + x];
 	}
-	mlx_destroy_image(info->mlx, img->img);
+	mlx_destroy_image(info->mlx, img.img);
 }
 
 void load_texture(t_info *info)
 {
 	t_img img;
 
-	load_image(info, info->texture[0], "textures/eagle.xpm", &img);
-	load_image(info, info->texture[1], "textures/redbrick.xpm", &img);
-	load_image(info, info->texture[2], "textures/purplestone.xpm", &img);
-	load_image(info, info->texture[3], "textures/greystone.xpm", &img);
-	load_image(info, info->texture[4], "textures/bluestone.xpm", &img);
-	load_image(info, info->texture[5], "textures/mossy.xpm", &img);
-	load_image(info, info->texture[6], "textures/wood.xpm", &img);
-	load_image(info, info->texture[7], "textures/colorstone.xpm", &img);
+	load_image(info, info->texture[0], "./textures/barrel.xpm");
+	load_image(info, info->texture[1], "textures/redbrick.xpm");
+	load_image(info, info->texture[2], "textures/purplestone.xpm");
+	load_image(info, info->texture[3], "textures/greystone.xpm");
+	load_image(info, info->texture[4], "textures/bluestone.xpm");
+	load_image(info, info->texture[5], "textures/mossy.xpm");
+	load_image(info, info->texture[6], "textures/wood.xpm");
+	load_image(info, info->texture[7], "textures/colorstone.xpm");
 }
 
 int main(void)
@@ -386,10 +386,10 @@ int main(void)
 	t_info info;
 	info.mlx = mlx_init();
 
-	// 플레이어 현재 위치 (22, 11.5)
+	// 플레이어 시작 위치 (22, 11.5)
 	info.posX = 22.0;
 	info.posY = 11.5;
-	// 플레이어 방향 (서쪽)
+	// 플레이어 시작 방향 (서쪽)
 	info.dirX = -1.0;
 	info.dirY = 0.0;
 
@@ -420,13 +420,11 @@ int main(void)
 			info.texture[i][j] = 0;
 		}
 	}
-
-	load_texture(&info);
-
 	info.moveSpeed = 0.05;
 	info.rotSpeed = 0.05;
 
 	info.win = mlx_new_window(info.mlx, width, height, "mlx");
+	load_texture(&info);
 
 	info.img.img = mlx_new_image(info.mlx, width, height);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size_l, &info.img.endian);

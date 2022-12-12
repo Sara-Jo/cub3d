@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:16:28 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 02:48:38 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
+	(void) argv;
 	fd = access_file(argv[1]);
 	if (fd == -1)
 		return (1);
@@ -32,10 +33,11 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	data.sc.mlx = mlx_init();
+	make_texture(&data);
 	data.sc.mlx_win = mlx_new_window(data.sc.mlx, WIDTH, HEIGHT, "hi");
 	data.img.ptr = mlx_new_image(data.sc.mlx, WIDTH, HEIGHT);
 	data.img.addr = mlx_get_data_addr(data.img.ptr, &data.img.bits_per_pixel, \
-								&data.img.line_length, &data.img.endian);
+									&data.img.line_length, &data.img.endian);
 	render(&data);
 	mlx_hook(data.sc.mlx_win, 2, 0, &handle_key_down, &data);
 	mlx_loop(data.sc.mlx);

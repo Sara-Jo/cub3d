@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 16:14:48 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 02:58:33 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,73 +23,52 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	load_texture(t_data *a, char *path)
+
+//void load_image(t_data *a, int *texture, char *path)
+//{
+	//t_img	img;
+	//int		*data;
+
+	//img.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &img.img_width,
+									//&img.img_height);
+	//if (!img.ptr)
+	//{
+		//perror(path);
+		//exit(1);
+	//}
+	//data = (int *)mlx_get_data_addr(img.ptr, &img.bits_per_pixel, &img.line_length, &img.endian);
+	//for (int y = 0; y < img.img_height; y++)
+	//{
+		//for (int x = 0; x < img.img_width; x++)
+			//texture[img.img_width * y + x] = data[img.img_width * y + x];
+	//}
+	// mlx_destroy_image(a->sc.mlx, img.ptr);
+//}
+
+void	make_texture(t_data *a)
 {
-	t_img			img;
-	t_wh			size;
-	t_wh			idx;
-	unsigned int	*dst;
+	int			i;
 
-	img.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &size.x, &size.y);
-	dst = (unsigned int *)malloc(size.x * size.y);
-	if (!img.addr || !dst)
+	a->tex_addr = (int **)malloc(sizeof(int *) * 4);
+	i = 0;
+	while (i < 4)
 	{
-		perror(path);
-		exit(1);
+		a->tex_addr[i] = (int *)malloc(sizeof(int) * (TEXHEIGHT * TEXWIDTH));
+		ft_bzero(a->tex_addr[i], TEXHEIGHT * TEXWIDTH);
+		i++;
 	}
-	img.addr = mlx_get_data_addr(img.ptr, &img.bits_per_pixel, \
-								&img.line_length, &img.endian);
-	idx.x = 0;
-	while (idx.x < size.x)
-	{
-		idx.y = 0;
-		while (idx.y < size.y)
-		{
-			idx.y++;
-		}
-		idx.x++;
-	}
-
-	mlx_destroy_image(a->sc.mlx, img.ptr);
-}
-
-void	make_texture(unsigned int texture[8][TEXHEIGHT * TEXWIDTH])
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < TEXWIDTH)
-	{
-		y = 0;
-		while (y < TEXHEIGHT)
-		{
-			int xorcolor = (x * 256 / TEXWIDTH) ^ (y * 256 / TEXHEIGHT);
-			//int xcolor = x * 256 / TEXWIDTH;
-			int ycolor = y * 256 / TEXHEIGHT;
-			int xycolor = y * 128 / TEXHEIGHT + x * 128 / TEXWIDTH;
-			texture[0][TEXWIDTH * y + x] = 65536 * 254 * (x != y && x != TEXWIDTH - y); //flat red texture with black cross
-			texture[1][TEXWIDTH * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
-			texture[2][TEXWIDTH * y + x] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
-			texture[3][TEXWIDTH * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
-			texture[4][TEXWIDTH * y + x] = 256 * xorcolor; //xor green
-			texture[5][TEXWIDTH * y + x] = 65536 * 192 * (x % 16 && y % 16); //red bricks
-			texture[6][TEXWIDTH * y + x] = 65536 * ycolor; //red gradient
-			texture[7][TEXWIDTH * y + x] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
-			y++;
-		}
-		x++;
-	}
+	//load_image(a, a->tex_addr[0], a->texture[0]);
+	//load_image(a, a->tex_addr[1], a->texture[1]);
+	//load_image(a, a->tex_addr[2], a->texture[2]);
+	//load_image(a, a->tex_addr[3], a->texture[3]);
 }
 
 void	render(t_data *a)
 {
-	unsigned int	texture[8][TEXHEIGHT * TEXWIDTH];
 	int				x;
 	int				y;
 	int				color;
 
-	make_texture(texture);
 	ft_bzero(a->img.addr, WIDTH * HEIGHT * a->img.bits_per_pixel / 8);
 	x = 0;
 	while (x < HEIGHT / 2)
@@ -106,6 +85,5 @@ void	render(t_data *a)
 		x++;
 	}
 	cast_wall(a);
-	// load_texture(a, "./texture/wall.xpm");
 	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);
 }
