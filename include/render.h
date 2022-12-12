@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:33:50 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:43:35 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 16:44:48 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct s_i_xy
 typedef struct s_d_xy	t_dist;
 typedef struct s_d_xy	t_vec2;
 typedef struct s_i_xy	t_pos;
+typedef struct s_i_xy	t_wh;
 
 typedef struct s_dist3
 {

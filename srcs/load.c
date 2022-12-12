@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 00:13:34 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 16:30:38 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	map_read(char **map, t_player *player)
 			else if (*line == 'E')
 				*player = set_player(*line, x, y, M_PI / (-2.0));
 			else if (*line == 'W')
-				*player = set_player(*line, x, y, M_PI / (2.0));
+				*player = set_player(*line, x, y, M_PI / 2.0);
 			line++;
 			y++;
 		}

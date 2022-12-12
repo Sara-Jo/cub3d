@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 02:15:40 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/12 17:19:51 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	draw_line(int i, t_wall *ele, t_data *a)
 	int	draw_start;
 	int	draw_end;
 
-	line_height = (int)(HEIGHT / ele->perp_wall_dist);
+	if (ele->perp_wall_dist != 0)
+		line_height = (int)(HEIGHT / ele->perp_wall_dist);
+	else
+		line_height = (int)HEIGHT;
 	draw_start = -line_height / 2 + HEIGHT / 2;
 	if (draw_start < 0)
 		draw_start = 0;
@@ -116,7 +119,7 @@ void	cast_wall(t_data *a)
 		if (draw_start < 0)
 			draw_start = 0;
 		draw_end = line_height / 2 + HEIGHT / 2;
-		if (draw_end >= HEIGHT)
+		if (draw_end < 0 || draw_end >= HEIGHT)
 			draw_end = HEIGHT - 1;
 		double	wall_x;
 		if (ele.side == 0) wall_x = a->player.col + ele.perp_wall_dist * ray_dir.y;
@@ -127,7 +130,7 @@ void	cast_wall(t_data *a)
 		if (ele.side == 1 && ray_dir.y < 0) tex_x = TEXWIDTH - tex_x - 1;
 		double step = 1.0 * TEXHEIGHT / line_height;
 		double tex_pos = (draw_start - HEIGHT / 2 + line_height / 2) * step;
-		while (draw_start < draw_end)
+		while (draw_start <= draw_end)
 		{
 			int tex_y = (int)tex_pos & (TEXHEIGHT - 1);
 			tex_pos += step;
