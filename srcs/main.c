@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 13:03:57 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 17:17:16 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	main(int argc, char **argv)
 	data.img.addr = mlx_get_data_addr(data.img.ptr, &data.img.bits_per_pixel, \
 									&data.img.line_length, &data.img.endian);
 	render(&data);
-	mlx_hook(data.sc.mlx_win, 2, 0, &handle_key_down, &data);
+	mlx_hook(data.sc.mlx_win, X_EVENT_KEY_PRESS, 0, &handle_key_down, &data);
+	mlx_hook(data.sc.mlx_win, X_EVENT_KEY_EXIT, 0, &handle_exit, &data);
 	mlx_loop(data.sc.mlx);
 	return (0);
 }
