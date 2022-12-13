@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:33:50 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/12 19:57:28 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 18:06:58 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ struct s_i_xy
 typedef struct s_d_xy	t_dist;
 typedef struct s_d_xy	t_vec2;
 typedef struct s_i_xy	t_pos;
-typedef struct s_i_xy	t_wh;
 
 typedef struct s_dist3
 {
@@ -42,7 +41,7 @@ typedef struct s_dist3
 	t_dist	step;
 }	t_dist3;
 
-typedef struct s_cast //TODO: 구조체 이름 수정하기
+typedef struct s_cast
 {
 	t_pos	map;
 	t_vec2	ray_dir;

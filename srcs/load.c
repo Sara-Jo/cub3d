@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 13:08:48 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 19:26:56 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	access_file(char *file)
 	}
 	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
 	{
-		ft_putstr_fd("no .cub\n", 2);
+		ft_putstr_fd("Error\n", 2);
 		return (-1);
 	}
 	return (fd);
@@ -118,6 +118,5 @@ int	validate_data(char **raw, t_data *data)
 	}
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
-	free_str(raw);
 	return (0);
 }

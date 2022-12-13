@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 13:03:54 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 19:24:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,23 @@ static void	xpm_to_image(t_data *a, int *texture, char *path)
 	int		x;
 	int		y;
 
+	ft_bzero(&i, sizeof(t_img));
 	i.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &i.img_width, &i.img_height);
 	if (!i.ptr)
 	{
+		clear_exec_data(a);
+		clear_plat_data(a);
 		perror(path);
 		exit(1);
 	}
 	data = (int *)mlx_get_data_addr(i.ptr, &i.bits_per_pixel, &i.line_length, \
 																	&i.endian);
-	y = 0;
-	while (y < i.img_height)
+	y = -1;
+	while (++y < i.img_height)
 	{
-		x = 0;
-		while (x < i.img_width)
-		{
+		x = -1;
+		while (++x < i.img_width)
 			texture[i.img_width * y + x] = data[i.img_width * y + x];
-			x++;
-		}
-		y++;
 	}
 	mlx_destroy_image(a->sc.mlx, i.ptr);
 }

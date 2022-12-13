@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 17:17:06 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 19:13:54 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "render.h"
-
-# define texWidth 64
-# define texHeight 64
 
 typedef enum e_list_of_key_code
 {
@@ -61,7 +58,6 @@ typedef struct s_data
 	char		**map;
 	int			map_width;
 	int			map_height;
-	char		**view;
 	t_screen	sc;
 	t_img		img;
 	t_player	player;
@@ -79,5 +75,7 @@ int			handle_exit(t_data *a);
 void		cast_wall(t_data *a);
 void		load_texture(t_data *a);
 void		free_str(char **str);
+void		clear_plat_data(t_data *a);
+void		clear_exec_data(t_data *a);
 
 #endif

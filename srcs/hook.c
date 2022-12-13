@@ -6,16 +6,18 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 17:46:21 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 19:14:25 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "mlx.h"
 #include <math.h>
 
 int	handle_exit(t_data *a)
 {
-	(void) a;
+	clear_exec_data(a);
+	clear_plat_data(a);
 	exit(0);
 }
 
