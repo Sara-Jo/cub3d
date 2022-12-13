@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 20:43:17 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/11 23:49:23 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:09:32 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,17 @@ int	ft_isspace(int c)
 int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
+}
+
+void	free_str(char **str)
+{
+	char	**start;
+
+	start = str;
+	while (*start)
+	{
+		free(*start);
+		start++;
+	}
+	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 04:47:55 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:08:48 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,6 @@ int	validate_data(char **raw, t_data *data)
 	}
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
-	// while (*raw)
-	// {
-	// 	free(*raw);
-	// 	raw++;
-	// }
-	// free(raw);
+	free_str(raw);
 	return (0);
 }

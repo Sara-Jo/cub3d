@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 04:48:34 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:03:54 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,36 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-
-void load_image(t_data *a, int *texture, char *path)
+static void	xpm_to_image(t_data *a, int *texture, char *path)
 {
-	t_img	img;
+	t_img	i;
 	int		*data;
+	int		x;
+	int		y;
 
-	img.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &img.img_width,
-									&img.img_height);
-	if (!img.ptr)
+	i.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &i.img_width, &i.img_height);
+	if (!i.ptr)
 	{
 		perror(path);
 		exit(1);
 	}
-	data = (int *)mlx_get_data_addr(img.ptr, &img.bits_per_pixel, &img.line_length, &img.endian);
-	for (int y = 0; y < img.img_height; y++)
+	data = (int *)mlx_get_data_addr(i.ptr, &i.bits_per_pixel, &i.line_length, \
+																	&i.endian);
+	y = 0;
+	while (y < i.img_height)
 	{
-		for (int x = 0; x < img.img_width; x++)
-			texture[img.img_width * y + x] = data[img.img_width * y + x];
+		x = 0;
+		while (x < i.img_width)
+		{
+			texture[i.img_width * y + x] = data[i.img_width * y + x];
+			x++;
+		}
+		y++;
 	}
-	mlx_destroy_image(a->sc.mlx, img.ptr);
+	mlx_destroy_image(a->sc.mlx, i.ptr);
 }
 
-void	make_texture(t_data *a)
+void	load_texture(t_data *a)
 {
 	int			i;
 
@@ -55,12 +62,9 @@ void	make_texture(t_data *a)
 	{
 		a->tex_addr[i] = (int *)malloc(sizeof(int) * (TEXHEIGHT * TEXWIDTH));
 		ft_bzero(a->tex_addr[i], TEXHEIGHT * TEXWIDTH);
+		xpm_to_image(a, a->tex_addr[i], a->texture[i]);
 		i++;
 	}
-	load_image(a, a->tex_addr[0], a->texture[0]);
-	load_image(a, a->tex_addr[1], a->texture[1]);
-	load_image(a, a->tex_addr[2], a->texture[2]);
-	load_image(a, a->tex_addr[3], a->texture[3]);
 }
 
 void	render(t_data *a)

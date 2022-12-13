@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:00:40 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/13 02:17:50 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:14:19 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,13 +364,12 @@ void load_image(t_info *info, int *texture, char *path)
 		for (int x = 0; x < img.img_width; x++)
 			texture[img.img_width * y + x] = data[img.img_width * y + x];
 	}
+
 	mlx_destroy_image(info->mlx, img.img);
 }
 
 void load_texture(t_info *info)
 {
-	t_img img;
-
 	load_image(info, info->texture[0], "./textures/barrel.xpm");
 	load_image(info, info->texture[1], "textures/redbrick.xpm");
 	load_image(info, info->texture[2], "textures/purplestone.xpm");

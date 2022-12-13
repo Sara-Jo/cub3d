@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 04:46:52 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 12:49:42 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,59 +63,59 @@ void	calc_perpendicular(t_cast *ele, t_dist3 *dist, char **world)
 		ele->perp_wall_dist = dist->side.y - dist->delta.y;
 }
 
-// static t_draw	set_draw_src(t_cast *ele, t_player *player)
-// {
-// 	t_draw	src;
+static t_draw	set_draw_src(t_cast *ele, t_player *player)
+{
+	t_draw	src;
 
-// 	src.line_height = (int)(HEIGHT / ele->perp_wall_dist);
-// 	src.draw_start = -src.line_height / 2 + HEIGHT / 2;
-// 	if (src.draw_start < 0)
-// 		src.draw_start = 0;
-// 	src.draw_end = src.line_height / 2 + HEIGHT / 2;
-// 	if (src.draw_end < 0 || src.draw_end >= HEIGHT)
-// 		src.draw_end = HEIGHT - 1;
-// 	src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.x;
-// 	if (ele->side == 0)
-// 		src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.y;
-// 	src.wall_x -= floor(src.wall_x);
-// 	src.tex_x = (int)(src.wall_x * (double)TEXWIDTH);
-// 	if (ele->side == 0 && ele->ray_dir.x > 0)
-// 		src.tex_x = TEXWIDTH - src.tex_x - 1;
-// 	if (ele->side == 1 && ele->ray_dir.y < 0)
-// 		src.tex_x = TEXWIDTH - src.tex_x - 1;
-// 	src.step = 1.0 * TEXHEIGHT / src.line_height;
-// 	src.tex_pos = (src.draw_start - HEIGHT / 2 + src.line_height / 2) \
-// 					* src.step;
-// 	return (src);
-// }
+	src.line_height = (int)(HEIGHT / ele->perp_wall_dist);
+	src.draw_start = -src.line_height / 2 + HEIGHT / 2;
+	if (src.draw_start < 0)
+		src.draw_start = 0;
+	src.draw_end = src.line_height / 2 + HEIGHT / 2;
+	if (src.draw_end < 0 || src.draw_end >= HEIGHT)
+		src.draw_end = HEIGHT - 1;
+	src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.x;
+	if (ele->side == 0)
+		src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.y;
+	src.wall_x -= floor(src.wall_x);
+	src.tex_x = (int)(src.wall_x * (double)TEXWIDTH);
+	if (ele->side == 0 && ele->ray_dir.x > 0)
+		src.tex_x = TEXWIDTH - src.tex_x - 1;
+	if (ele->side == 1 && ele->ray_dir.y < 0)
+		src.tex_x = TEXWIDTH - src.tex_x - 1;
+	src.step = 1.0 * TEXHEIGHT / src.line_height;
+	src.tex_pos = (src.draw_start - HEIGHT / 2 + src.line_height / 2) \
+					* src.step;
+	return (src);
+}
 
-// static void	draw_texture(int i, t_cast *ele, t_data *a, unsigned int texture[8][TEXHEIGHT * TEXWIDTH])
-// {
-// 	t_draw			src;
-// 	int				tex_y;
-// 	unsigned int	color;
+static void	draw_texture(int i, t_cast *ele, t_data *a)
+{
+	t_draw			src;
+	int				tex_y;
+	unsigned int	color;
 
-// 	src = set_draw_src(ele, &a->player);
-// 	while (src.draw_start <= src.draw_end)
-// 	{
-// 		tex_y = (int)src.tex_pos & (TEXHEIGHT - 1);
-// 		src.tex_pos += src.step;
-// 		if (ele->side == 1)
-// 		{
-// 			color = texture[3][TEXHEIGHT * tex_y + src.tex_x];
-// 			if (ele->ray_dir.y < 0)
-// 				color = texture[6][TEXHEIGHT * tex_y + src.tex_x];
-// 		}
-// 		else
-// 		{
-// 			color = texture[7][TEXHEIGHT * tex_y + src.tex_x];
-// 			if (ele->ray_dir.x < 0)
-// 				color = texture[0][TEXHEIGHT * tex_y + src.tex_x];
-// 		}
-// 		my_mlx_pixel_put(&a->img, i, src.draw_start, color);
-// 		src.draw_start++;
-// 	}
-// }
+	src = set_draw_src(ele, &a->player);
+	while (src.draw_start <= src.draw_end)
+	{
+		tex_y = (int)src.tex_pos & (TEXHEIGHT - 1);
+		src.tex_pos += src.step;
+		if (ele->side == 1)
+		{
+			color = a->tex_addr[0][TEXHEIGHT * tex_y + src.tex_x];
+			if (ele->ray_dir.y < 0)
+				color = a->tex_addr[1][TEXHEIGHT * tex_y + src.tex_x];
+		}
+		else
+		{
+			color = a->tex_addr[2][TEXHEIGHT * tex_y + src.tex_x];
+			if (ele->ray_dir.x < 0)
+				color = a->tex_addr[3][TEXHEIGHT * tex_y + src.tex_x];
+		}
+		my_mlx_pixel_put(&a->img, i, src.draw_start, color);
+		src.draw_start++;
+	}
+}
 
 void	cast_wall(t_data *a)
 {
@@ -132,46 +132,7 @@ void	cast_wall(t_data *a)
 		ele.map = set_pos((int)a->player.row, (int)a->player.col);
 		set_dist3(&dist, &ele.ray_dir, ele.map, &a->player);
 		calc_perpendicular(&ele, &dist, a->map);
-		//draw_line(i, &ele, a);
-		int	line_height;
-		int	color;
-		int	draw_start;
-		int	draw_end;
-		line_height = (int)(HEIGHT / ele.perp_wall_dist);
-		draw_start = -line_height / 2 + HEIGHT / 2;
-		if (draw_start < 0)
-			draw_start = 0;
-		draw_end = line_height / 2 + HEIGHT / 2;
-		if (draw_end < 0 || draw_end >= HEIGHT)
-			draw_end = HEIGHT - 1;
-		double	wall_x;
-		if (ele.side == 0) wall_x = a->player.col + ele.perp_wall_dist * ele.ray_dir.y;
-		else wall_x = a->player.row + ele.perp_wall_dist * ele.ray_dir.x;
-		wall_x -= floor(wall_x);
-		int tex_x = (int)(wall_x * (double)TEXWIDTH);
-		if (ele.side == 0 && ele.ray_dir.x > 0) tex_x = TEXWIDTH - tex_x - 1;
-		if (ele.side == 1 && ele.ray_dir.y < 0) tex_x = TEXWIDTH - tex_x - 1;
-		double step = 1.0 * TEXHEIGHT / line_height;
-		double tex_pos = (draw_start - HEIGHT / 2 + line_height / 2) * step;
-		while (draw_start <= draw_end)
-		{
-			int tex_y = (int)tex_pos & (TEXHEIGHT - 1);
-			tex_pos += step;
-			if (ele.side == 1)
-			{
-				color = a->tex_addr[0][TEXHEIGHT * tex_y + tex_x];
-				if (ele.ray_dir.y < 0)
-					color = a->tex_addr[1][TEXHEIGHT * tex_y + tex_x];
-			}
-			else
-			{
-				color = a->tex_addr[2][TEXHEIGHT * tex_y + tex_x];
-				if (ele.ray_dir.x < 0)
-					color = a->tex_addr[3][TEXHEIGHT * tex_y + tex_x];
-			}
-			my_mlx_pixel_put(&a->img, i, draw_start, color);
-			draw_start++;
-		}
+		draw_texture(i, &ele, a);
 		i++;
 	}
 }

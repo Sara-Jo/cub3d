@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 04:23:25 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:09:15 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include "libft.h"
 # include "render.h"
 
-#define texWidth 64
-#define texHeight 64
+# define texWidth 64
+# define texHeight 64
 
 typedef enum e_list_of_key_code
 {
@@ -43,13 +43,13 @@ typedef struct s_screen
 
 typedef struct s_img
 {
-	void	*ptr;	// img
-	char	*addr;	// data
+	void	*ptr;
+	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int 	img_width;
-    int 	img_height;
+	int		img_width;
+	int		img_height;
 }	t_img;
 
 typedef struct s_data
@@ -76,6 +76,7 @@ char		**file_to_rawdata(int fd, int depth);
 int			validate_data(char **raw, t_data *data);
 int			handle_key_down(int keycode, t_data *param);
 void		cast_wall(t_data *a);
-void		make_texture(t_data *a);
+void		load_texture(t_data *a);
+void		free_str(char **str);
 
 #endif
