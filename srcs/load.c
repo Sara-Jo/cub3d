@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 01:52:25 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/13 04:47:55 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static void	map_read(char **map, t_player *player)
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	while (raw[i] && i < 6)
@@ -117,14 +116,13 @@ int	validate_data(char **raw, t_data *data)
 			data->c_color = 1;
 		i++;
 	}
-	j = 0;
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
-	while (*raw)
-	{
-		free(*raw);
-		raw++;
-	}
-	free(raw);
+	// while (*raw)
+	// {
+	// 	free(*raw);
+	// 	raw++;
+	// }
+	// free(raw);
 	return (0);
 }
