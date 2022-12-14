@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 13:08:01 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/14 16:16:29 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,19 @@ void	render(t_data *a)
 	int				color;
 
 	ft_bzero(a->img.addr, WIDTH * HEIGHT * a->img.bits_per_pixel / 8);
-	x = 0;
-	while (x < HEIGHT / 2)
+	y = 0;
+	while (y < HEIGHT / 2)
 	{
-		y = 0;
-		while (y < WIDTH)
+		x = 0;
+		while (x < WIDTH)
 		{
 			color = 0xffff00;
-			my_mlx_pixel_put(&a->img, y, HEIGHT / 2 + x, color);
+			my_mlx_pixel_put(&a->img, x, HEIGHT / 2 + y, color);
 			color = 0xff00ff;
-			my_mlx_pixel_put(&a->img, y, HEIGHT / 2 - x - 1, color);
-			y++;
+			my_mlx_pixel_put(&a->img, x, HEIGHT / 2 - y - 1, color);
+			x++;
 		}
-		x++;
+		y++;
 	}
 	cast_wall(a);
 	mlx_put_image_to_window(a->sc.mlx, a->sc.mlx_win, a->img.ptr, 0, 0);

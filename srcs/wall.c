@@ -6,21 +6,22 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 12:54:02 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/14 17:20:59 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "main.h"
 #include <math.h>
+#include <limits.h>
 
 void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 {
-	dist->delta = set_dist(1e30, 1e30);
-	if (ray_dir->x != 0)
-		dist->delta.x = fabs(1 / ray_dir->x);
-	if (ray_dir->y != 0)
-		dist->delta.y = fabs(1 / ray_dir->y);
+	dist->delta = set_dist(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
+	if (ray_dir->x == 0)
+		dist->delta.x = 1e30;
+	if (ray_dir->y == 0)
+		dist->delta.y = 1e30;
 	dist->step = set_dist(1.0, 1.0);
 	dist->side = set_dist((map.x + 1.0 - p->row) * dist->delta.x, \
 							(map.y + 1.0 - p->col) * dist->delta.y);
@@ -67,12 +68,14 @@ static t_draw	set_draw_src(t_cast *ele, t_player *player)
 {
 	t_draw	src;
 
+	if (ele->perp_wall_dist < 0.19999)
+		ele->perp_wall_dist = 0.09999999999;
 	src.line_height = (int)(HEIGHT / ele->perp_wall_dist);
 	src.draw_start = -src.line_height / 2 + HEIGHT / 2;
 	if (src.draw_start < 0)
 		src.draw_start = 0;
 	src.draw_end = src.line_height / 2 + HEIGHT / 2;
-	if (src.draw_end < 0 || src.draw_end >= HEIGHT)
+	if (src.draw_end <= 0 || src.draw_end >= HEIGHT)
 		src.draw_end = HEIGHT - 1;
 	src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.x;
 	if (ele->side == 0)
