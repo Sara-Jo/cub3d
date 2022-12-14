@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 19:24:18 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/14 13:08:01 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	xpm_to_image(t_data *a, int *texture, char *path)
 	i.ptr = mlx_xpm_file_to_image(a->sc.mlx, path, &i.img_width, &i.img_height);
 	if (!i.ptr)
 	{
+		perror(path);
 		clear_exec_data(a);
 		clear_plat_data(a);
-		perror(path);
 		exit(1);
 	}
 	data = (int *)mlx_get_data_addr(i.ptr, &i.bits_per_pixel, &i.line_length, \
@@ -56,6 +56,9 @@ void	load_texture(t_data *a)
 	int			i;
 
 	a->tex_addr = (int **)malloc(sizeof(int *) * 4);
+	i = 0;
+	while (i < 4)
+		a->tex_addr[i++] = 0;
 	i = 0;
 	while (i < 4)
 	{
