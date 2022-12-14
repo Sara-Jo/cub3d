@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 19:13:54 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 04:41:32 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_data
 char		*get_next_line(int fd);
 int			ft_isspace(int c);
 void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
+char		*ft_strndup(const char *s1, int n);
 void		render(t_data *data);
 int			access_file(char *file);
 char		**file_to_rawdata(int fd, int depth);

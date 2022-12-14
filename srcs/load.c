@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 19:27:47 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 05:16:45 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ static char	**load_map(char **raw, int depth)
 		map = load_map(raw + 1, depth + 1);
 	if (map)
 	{
-		map[depth] = NULL;
-		if (*raw)
+		if (*raw && ft_strchr(*raw, '\n'))
+			map[depth] = ft_strndup(*raw, ft_strlen(*raw) - 1);
+		else if (*raw)
 			map[depth] = ft_strdup(*raw);
+		else
+			map[depth] = NULL;
 	}
 	return (map);
 }
@@ -98,12 +101,73 @@ static void	map_read(char **map, t_player *player)
 	}
 }
 
+void	check_row(t_data *a, char *map_line)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (ft_isspace(map_line[i]))
+		i++;
+	while (map_line[i] == '1')
+		i++;
+	
+	while (i < a->map_width)
+	{
+		while (ft_isspace(map_line[i]))
+			i++;
+		i++;
+	}
+}
+
+void	check_map(t_data *a)
+{
+	int		i;
+	int		width;
+	char	*line;
+
+	i = 0;
+	while (a->map[i] != NULL)
+	{
+		width = ft_strlen(a->map[i]);
+		if (a->map_width < width)
+			a->map_width = width;
+		i++;
+	}
+	a->map_height = i - 1;
+	i = 0;
+	while (i < a->map_height)
+	{
+		width = ft_strlen(a->map[i]);
+		if (width < a->map_width)
+		{ // fill_map_width
+			int j = 0;
+			line = (char *)malloc(sizeof(char) * (a->map_width + 1));
+			if (!line)
+				exit(1);
+			ft_strlcpy(line, a->map[i], width + 1);
+			j = width;
+			while (j < a->map_width)
+			{
+				line[j] = '1';
+				j++;
+			}
+			line[j] = '\0';
+			free(a->map[i]);
+			a->map[i] = line;
+		}
+		check_row(a, a->map[i]);
+		i++;
+	}
+}
+
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
 	int		count;
 
 	i = 0;
+	count = 0;
 	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
 	// TODO 2. f_color, c_color 파싱 함수 추가 
 	// TODO 3. 6가지 모두 잘 들어왔는지
@@ -145,10 +209,10 @@ int	validate_data(char **raw, t_data *data)
 			printf("Invalid map\n");
 			exit(1);
 		}
-			
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
+	check_map(data);
 	map_read(data->map, &data->player);
 	return (0);
 }
