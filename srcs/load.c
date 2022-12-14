@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 19:27:47 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 00:29:04 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdio.h>
 #include <math.h>
 
-int	access_file(char *file)
+int access_file(char *file)
 {
-	int	fd;
+	int fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -26,16 +26,17 @@ int	access_file(char *file)
 	}
 	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
 	{
-		ft_putstr_fd("Error\n", 2);
-		return (-1);
+		exit_with_error("Invalid file type\n");
+		// ft_putstr_fd("Error\n", 2);
+		// return (-1);
 	}
 	return (fd);
 }
 
-char	**file_to_rawdata(int fd, int depth)
+char **file_to_rawdata(int fd, int depth)
 {
-	char	**des;
-	char	*line;
+	char **des;
+	char *line;
 
 	des = NULL;
 	line = get_next_line(fd);
@@ -48,9 +49,9 @@ char	**file_to_rawdata(int fd, int depth)
 	return (des);
 }
 
-static char	**load_map(char **raw, int depth)
+static char **load_map(char **raw, int depth)
 {
-	char	**map;
+	char **map;
 
 	map = 0;
 	if (*raw == NULL)
@@ -69,11 +70,11 @@ static char	**load_map(char **raw, int depth)
 // TODO 1: 6가지 유효한 문자인지 체크
 // TODO 2: 벽으로 둘러싸여 있는지 체크
 // TODO 3: 플레이어가 하나만 존재하는지 체크
-static void	map_read(char **map, t_player *player)
+static void map_read(char **map, t_player *player)
 {
-	char	*line;
-	int		x;
-	int		y;
+	char *line;
+	int x;
+	int y;
 
 	x = 0;
 	while (*map)
@@ -98,57 +99,91 @@ static void	map_read(char **map, t_player *player)
 	}
 }
 
-int	validate_data(char **raw, t_data *data)
+void set_color_data(char *type, char *val, t_data *data)
 {
-	int		i;
-	int		count;
+	char **split_data;
+	int i;
+	int j;
+	int tmp[3];
 
 	i = 0;
+	split_data = ft_split(val, ',');
+	while (split_data[i])
+		i++;
+	if (i != 3)
+		exit_with_error("Error: Invalid color data\n");
+	i = 0;
+	while (i < 3)
+	{
+		j = 0;
+		while (split_data[i][j])
+		{
+			if (!ft_isdigit(split_data[i][j++]))
+				exit_with_error("Error: Invalid color data\n");
+		}
+		tmp[i] = ft_atoi(split_data[i]);
+		if (tmp[i] < 0 || tmp[i] > 255)
+			exit_with_error("Error: Invalid color data\n");
+		i++;
+	}
+	if (type == 'F')
+	{
+		data->f_color.r = tmp[0];
+		data->f_color.g = tmp[1];
+		data->f_color.b = tmp[2];
+	}
+	else if (type == 'C')
+	{
+		data->c_color.r = tmp[0];
+		data->c_color.g = tmp[1];
+		data->c_color.b = tmp[2];
+	}
+}
+
+void set_info_data(char *type, char *val, t_data *data)
+{
+	if (ft_strncmp(type, "NO", 3) == 0)
+		data->texture[0] = ft_substr(val, 0, ft_strlen(val));
+	else if (ft_strncmp(type, "SO", 3) == 0)
+		data->texture[1] = ft_substr(val, 0, ft_strlen(val));
+	else if (ft_strncmp(type, "WE", 3) == 0)
+		data->texture[2] = ft_substr(val, 0, ft_strlen(val));
+	else if (ft_strncmp(type, "EA", 3) == 0)
+		data->texture[3] = ft_substr(val, 0, ft_strlen(val));
+	else if (ft_strncmp(type, "F", 2) == 0)
+		set_color_data("F", ft_substr(val, 0, ft_strlen(val)), data);
+	else if (ft_strncmp(type, "C", 2) == 0)
+		set_color_data("C", ft_substr(val, 0, ft_strlen(val)), data);
+	else
+		exit_with_error("Error: Invalid map info\n");
+}
+
+int validate_data(char **raw, t_data *data)
+{
+	int i;
+	int j;
+	int count;
+	char **split_data;
+
+	i = 0;
+	j = 0;
 	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
-	// TODO 2. f_color, c_color 파싱 함수 추가 
+	// TODO 2. f_color, c_color 파싱 함수 추가
 	// TODO 3. 6가지 모두 잘 들어왔는지
 	while (raw[i])
 	{
-		if (count == 6)
-			break ;
-		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[0] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
-		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[1] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
-		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[2] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
-		else if (ft_strnstr(raw[i], "EA", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[3] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
-		else if (ft_strnstr(raw[i], "F", 1) && ft_isspace(*(raw[i] + 1)))
-		{
-			data->f_color = 1;
-			count++;
-		}
-		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
-		{
-			data->c_color = 1;
-			count++;
-		}
-		else {
-			printf("Invalid map\n");
-			exit(1);
-		}
-			
+		while (ft_isspace(raw[i]))
+			i++;
+		split_data = ft_split(raw[i], ' ');
+		while (split_data[j])
+			j++;
+		if (j != 2)
+			exit_with_error("Error: Invalid map info\n");
+		set_info_data(split_data[0], split_data[1], data);
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
+	free_str(split_data);
 	return (0);
 }
