@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 19:26:56 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/14 19:27:47 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ static char	**load_map(char **raw, int depth)
 	return (map);
 }
 
+// TODO 1: 6가지 유효한 문자인지 체크
+// TODO 2: 벽으로 둘러싸여 있는지 체크
+// TODO 3: 플레이어가 하나만 존재하는지 체크
 static void	map_read(char **map, t_player *player)
 {
 	char	*line;
@@ -98,22 +101,51 @@ static void	map_read(char **map, t_player *player)
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
+	int		count;
 
 	i = 0;
-	while (raw[i] && i < 6)
+	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
+	// TODO 2. f_color, c_color 파싱 함수 추가 
+	// TODO 3. 6가지 모두 잘 들어왔는지
+	while (raw[i])
 	{
+		if (count == 6)
+			break ;
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
+		{
 			data->texture[0] = ft_strtrim(raw[i] + 3, "\n");
+			count++;
+		}
 		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
+		{
 			data->texture[1] = ft_strtrim(raw[i] + 3, "\n");
+			count++;
+		}
 		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
+		{
 			data->texture[2] = ft_strtrim(raw[i] + 3, "\n");
+			count++;
+		}
 		else if (ft_strnstr(raw[i], "EA", 2) && ft_isspace(*(raw[i] + 2)))
+		{
 			data->texture[3] = ft_strtrim(raw[i] + 3, "\n");
+			count++;
+		}
 		else if (ft_strnstr(raw[i], "F", 1) && ft_isspace(*(raw[i] + 1)))
+		{
 			data->f_color = 1;
+			count++;
+		}
 		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
+		{
 			data->c_color = 1;
+			count++;
+		}
+		else {
+			printf("Invalid map\n");
+			exit(1);
+		}
+			
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
