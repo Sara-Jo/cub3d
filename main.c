@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 23:00:40 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/13 13:14:19 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/14 22:37:06 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ int key_press(int key, t_info *info)
 void load_image(t_info *info, int *texture, char *path)
 {
 	t_img img;
-	int	*data;
+	int *data;
 	img.img = mlx_xpm_file_to_image(info->mlx, path, &img.img_width, &img.img_height);
 	data = (int *)mlx_get_data_addr(img.img, &img.bpp, &img.size_l, &img.endian);
 	for (int y = 0; y < img.img_height; y++)
