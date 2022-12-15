@@ -1,9 +1,15 @@
+
+
 NO textures/pillar.xpm
 SO textures/bluestone.xpm
 WE textures/eagle.xpm
 EA textures/mossy.xpm
 F 220,100,0
 C 225,30,0
+
+
+
+
         1111111111111111111111111
         1000000000110000000000001
         101100000111000000000001
