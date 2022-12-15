@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 11:55:59 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 12:13:35 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,11 @@ int	validate_data(char **raw, t_data *data)
 	// TODO 3. 6가지 모두 잘 들어왔는지
 	while (raw[i] && *(raw[i]) == '\0')
 		i++;
+	if (raw[i] == NULL)
+	{
+		ft_putstr_fd("Invalid map\n", 2);
+		return (-1);
+	}
 	while (raw[i])
 	{
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
@@ -190,6 +195,13 @@ int	validate_data(char **raw, t_data *data)
 		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
 			data->c_color = 1;
 		i++;
+	}
+	while (raw[i] && *(raw[i]) == '\0')
+		i++;
+	if (raw[i] == NULL)
+	{
+		ft_putstr_fd("Invalid map\n", 2);
+		return (-1);
 	}
 	data->map = load_map(&raw[i], 0);
 	check_map(data);
