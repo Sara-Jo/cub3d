@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 15:38:45 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 21:40:19 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char **file_to_rawdata(int fd, int depth)
 	return (des);
 }
 
-static char **load_map(char **raw, int depth)
+char **load_map(char **raw, int depth)
 {
 	char **map;
 
@@ -78,7 +78,7 @@ static char **load_map(char **raw, int depth)
 // TODO 1: 6가지 유효한 문자인지 체크
 // TODO 2: 벽으로 둘러싸여 있는지 체크
 // TODO 3: 플레이어가 하나만 존재하는지 체크
-static void map_read(char **map, t_player *player)
+void map_read(char **map, t_player *player)
 {
 	char *line;
 	int x;
@@ -89,10 +89,12 @@ static void map_read(char **map, t_player *player)
 	{
 		y = 0;
 		line = *map;
-		// if (ft_strchr("01NSEW ", line) == NULL)
-		// 	exit_with_error("Error: Invalid map\n");
 		while (*line)
 		{
+			if (ft_strchr("01NSEW \t\r\n\v\f", *line) == NULL)
+				exit_with_error("Error: Invalid map\n");
+			if (player->player_dir && ft_strchr("NSEW", *line))
+				exit_with_error("Error: Invalid map\n");
 			if (*line == 'N')
 				*player = set_player(*line, x, y, 0);
 			else if (*line == 'S')
@@ -109,65 +111,59 @@ static void map_read(char **map, t_player *player)
 	}
 }
 
-void	check_row(t_data *a, char *map_line)
+void	valid(t_data *a, char **map, int x, int y)
 {
-	int	i;
-
-	i = 0;
-	while (ft_isspace(map_line[i]))
-		i++;
-	while (map_line[i] == '1')
-		i++;
-	
-	while (i < a->map_width)
-	{
-		while (ft_isspace(map_line[i]))
-			i++;
-		i++;
-	}
+	if ((y == 0 && map[y][x] == '0') \
+		|| (y == a->map_height - 1 && map[y][x] == '0'))
+		exit_with_error("Invalid map\n");
+	if ((x == 0 && map[y][x] == '0') \
+		|| (x == a->map_width - 1 && map[y][x] == '0'))
+		exit_with_error("Invalid map\n");
+	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
+		exit_with_error("Invalid map\n");
+	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
+		exit_with_error("Invalid map\n");
+	if (map[y][x + 1] == '\0')
+		exit_with_error("Invalid map\n");
+	map[y][x] = '2';
+	if (map[y + 1][x] == '1' && (map[y][x + 1] == '1' || map[y][x + 1] == '2'))
+		return ;
+	if (map[y + 1][x] && map[y + 1][x] == '0')
+		valid(a, map, x, y + 1);
+	if (map[y][x + 1] && map[y][x + 1] == '0')
+		valid(a, map, x + 1, y);
 }
 
-void	check_map(t_data *a)
+void	check_map(t_data *a, char **map)
 {
 	int		i;
+	int		j;
 	int		width;
-	char	*line;
 
 	i = 0;
-	while (a->map[i] != NULL)
+	while (map[i] != NULL)
 	{
-		width = ft_strlen(a->map[i]);
+		width = ft_strlen(map[i]);
+		if (width == 0 || ft_strchr(map[i], '1') == 0)
+			exit_with_error("Invalid map\n");
 		if (a->map_width < width)
 			a->map_width = width;
 		i++;
 	}
-	a->map_height = i - 1;
-	i = 0;
-	while (i < a->map_height)
+	a->map_height = i;
+	j = 0;
+	while (j < a->map_height)
 	{
-		width = ft_strlen(a->map[i]);
-		if (width < a->map_width)
-		{ // fill_map_width
-			int j = 0;
-			line = (char *)malloc(sizeof(char) * (a->map_width + 1));
-			if (!line)
-				exit(1);
-			ft_strlcpy(line, a->map[i], width + 1);
-			j = width;
-			while (j < a->map_width)
-			{
-				line[j] = '1';
-				j++;
-			}
-			line[j] = '\0';
-			free(a->map[i]);
-			a->map[i] = line;
+		i = 0;
+		while (i < a->map_width)
+		{
+			if (map[j][i] == '0')
+				valid(a, map, i, j);
+			i++;
 		}
-		check_row(a, a->map[i]);
-		i++;
+		j++;
 	}
 }
-
 
 void set_color_data(char type, char *val, t_data *data)
 {
@@ -263,8 +259,6 @@ int validate_data(char **raw, t_data *data)
 	// TODO 3. 6가지 모두 잘 들어왔는지
 	while (i < 6)
 	{
-		// while (ft_isspace(raw[i][j]))
-		// 	j++;
 		split_data = ft_split(raw[i], ' ');
 		j = 0;
 		while (split_data[j])
@@ -281,9 +275,9 @@ int validate_data(char **raw, t_data *data)
 		ft_putstr_fd("Invalid map\n", 2);
 		return (-1);
 	}
-	data->map = load_map(&raw[i], 0);
-	check_map(data);
-	map_read(data->map, &data->player);
+	check_map(data, &raw[i]);
+	// data->map = load_map(&raw[i], 0);
+	// map_read(data->map, &data->player);
 	free_str(split_data);
 	return (0);
 }

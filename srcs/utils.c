@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 20:43:17 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 04:50:27 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 15:51:58 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,10 @@ char	*ft_strndup(const char *s1, int n)
 		return (NULL);
 	ft_strlcpy(dst, s1, n + 1);
 	return (dst);
+}
+
+void exit_with_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(1);
 }
