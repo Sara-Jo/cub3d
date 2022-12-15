@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 00:25:42 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 14:53:44 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void free_str(char **str);
 void clear_plat_data(t_data *a);
 void clear_exec_data(t_data *a);
 void exit_with_error(char *str);
+void init_color(t_data *data);
 
 #endif
