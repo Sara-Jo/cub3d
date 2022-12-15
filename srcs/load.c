@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 14:54:26 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 15:25:10 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static void map_read(char **map, t_player *player)
 	{
 		y = 0;
 		line = *map;
+		// if (ft_strchr("01NSEW ", line) == NULL)
+		// 	exit_with_error("Error: Invalid map\n");
 		while (*line)
 		{
 			if (*line == 'N')
