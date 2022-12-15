@@ -6,17 +6,18 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:55:38 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 02:00:20 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "utils.h"
 #include <stdio.h>
 #include <math.h>
 
-int access_file(char *file)
+int	access_file(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)

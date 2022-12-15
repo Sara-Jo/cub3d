@@ -6,12 +6,13 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:49:04 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 01:59:37 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "mlx.h"
+#include "utils.h"
 #include <stdio.h>
 
 void	clear_plat_data(t_data *a)

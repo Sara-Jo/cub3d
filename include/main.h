@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:47:02 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 02:00:59 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int		validate_data(char **raw, t_data *data);
 int		access_file(char *file);
 void	load_texture(t_data *a);
 char	**file_to_rawdata(int fd, int depth);
+void	validate_map(t_data *a, char **map);
 
 #endif

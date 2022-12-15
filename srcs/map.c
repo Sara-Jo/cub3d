@@ -6,11 +6,12 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:07 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:36:11 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 02:01:22 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "utils.h"
 
 char	**load_map(char **raw, int depth)
 {
