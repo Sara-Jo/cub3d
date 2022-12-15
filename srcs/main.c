@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 23:03:23 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 14:48:35 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,16 @@ void exit_with_error(char *str)
 	exit(1);
 }
 
+void init_color(t_data *data)
+{
+	data->f_color.r = -1;
+	data->f_color.g = -1;
+	data->f_color.b = -1;
+	data->c_color.r = -1;
+	data->c_color.g = -1;
+	data->c_color.b = -1;
+}
+
 int main(int argc, char **argv)
 {
 	t_data data;
@@ -101,6 +111,7 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		exit_with_error("Error: Map file not entered\n");
 	data = init_data();
+	init_color(&data);
 	load_data(&data, argv[1]);
 	render(&data);
 	mlx_hook(data.sc.mlx_win, X_EVENT_KEY_PRESS, 0, &handle_key_down, &data);

@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 11:33:26 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 14:49:05 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void validate_elements(t_data *data)
 		i++;
 	}
 	i = 0;
-	if (data->c_color.r == NULL || data->c_color.g == NULL || data->f_color.r == NULL || data->f_color.g == NULL || data->f_color.b == NULL)
+	if (data->c_color.r == -1 || data->c_color.g == -1 || data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
 		exit_with_error("Error: Color is empty\n");
 	i++;
 }
