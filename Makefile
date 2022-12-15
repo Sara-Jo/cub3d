@@ -6,13 +6,13 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/15 21:36:22 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/16 01:36:25 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address
-SRCS = main.c utils.c render.c load.c hook.c vec.c player.c wall.c
+CFLAGS = -Wall -Werror -Wextra -g3
+SRCS = main.c utils.c render.c load.c hook.c vec.c player.c wall.c map.c
 SRCS_DIR = srcs
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=%.o)

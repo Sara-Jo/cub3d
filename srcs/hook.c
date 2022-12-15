@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/13 19:14:25 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 01:37:37 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	move_pos_negative(t_data *a, t_vec2 v, int postive)
 	t_pos	move_postive;
 	t_pos	move_negative;
 
-	move_speed = 0.2;
+	move_speed = 0.6;
 	move_postive = set_pos(a->player.row + v.x * move_speed, \
 							a->player.col + v.y * move_speed);
 	move_negative = set_pos(a->player.row - v.x * move_speed, \

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:16:08 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 01:55:38 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int access_file(char *file)
 	return (fd);
 }
 
-char **file_to_rawdata(int fd, int depth)
+char	**file_to_rawdata(int fd, int depth)
 {
-	char **des;
-	char *line;
+	char	**des;
+	char	*line;
 
 	des = NULL;
 	line = get_next_line(fd);
@@ -52,37 +52,17 @@ char **file_to_rawdata(int fd, int depth)
 			des[depth] = ft_strdup(line);
 		else
 			des[depth] = NULL;
+		if (line)
+			free(line);
 	}
 	return (des);
 }
 
-char **load_map(char **raw, int depth)
+void	map_read(char **map, t_player *player)
 {
-	char **map;
-
-	map = 0;
-	if (*raw == NULL)
-		map = (char **)malloc(sizeof(char *) * (depth + 1));
-	else
-		map = load_map(raw + 1, depth + 1);
-	if (map)
-	{
-		if (*raw)
-			map[depth] = ft_strdup(*raw);
-		else
-			map[depth] = NULL;
-	}
-	return (map);
-}
-
-// TODO 1: 6가지 유효한 문자인지 체크
-// TODO 2: 벽으로 둘러싸여 있는지 체크
-// TODO 3: 플레이어가 하나만 존재하는지 체크
-void map_read(char **map, t_player *player)
-{
-	char *line;
-	int x;
-	int y;
+	char	*line;
+	int		x;
+	int		y;
 
 	x = 0;
 	while (*map)
@@ -108,97 +88,6 @@ void map_read(char **map, t_player *player)
 		}
 		x++;
 		map++;
-	}
-}
-
-void	valid(t_data *a, char **map, int x, int y)
-{
-	if ((y == 0 && map[y][x] == '0') \
-		|| (y == a->map_height - 1 && map[y][x] == '0'))
-		exit_with_error("Invalid map\n");
-	if ((x == 0 && map[y][x] == '0') \
-		|| (x == a->map_width - 1 && map[y][x] == '0'))
-		exit_with_error("Invalid map\n");
-	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
-		exit_with_error("Invalid map\n");
-	if (map[y][x + 1] == '\0')
-		exit_with_error("Invalid map\n");
-	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
-		exit_with_error("Invalid map\n");
-	map[y][x] = '2';
-	if (map[y + 1][x] == '1' && (map[y][x + 1] == '1' || map[y][x + 1] == '2'))
-		return ;
-	if (map[y + 1][x] && map[y + 1][x] == '0')
-		valid(a, map, x, y + 1);
-	if (map[y][x + 1] && map[y][x + 1] == '0')
-		valid(a, map, x + 1, y);
-}
-
-void	map_width_height(t_data *a, char **map)
-{
-	int		i;
-	int		width;
-
-	i = 0;
-	while (map[i] != NULL)
-	{
-		width = ft_strlen(map[i]);
-		if (width == 0 || ft_strchr(map[i], '1') == 0)
-			exit_with_error("Invalid map\n");
-		if (a->map_width < width)
-			a->map_width = width;
-		i++;
-	}
-	a->map_height = i;
-}
-
-void	fill_map_width(t_data *a, char **map)
-{
-	int		i;
-	int		j;
-	int		width;
-	char	*line;
-
-	i = -1;
-	while (++i < a->map_height)
-	{
-		width = ft_strlen(map[i]);
-		if (width < a->map_width)
-		{
-			j = 0;
-			line = (char *)malloc(sizeof(char) * (a->map_width + 1));
-			if (!line)
-				exit_with_error("malloc\n");
-			ft_strlcpy(line, map[i], width + 1);
-			j = width;
-			while (j < a->map_width)
-				line[j++] = ' ';
-			line[j] = '\0';
-			free(map[i]);
-			map[i] = line;
-		}
-	}
-}
-
-void	check_map(t_data *a, char **map)
-{
-	int		i;
-	int		j;
-
-	map_width_height(a, map);
-	fill_map_width(a, map);
-	a->map = load_map(map, 0);
-	j = 0;
-	while (j < a->map_height)
-	{
-		i = 0;
-		while (i < a->map_width)
-		{
-			if (map[j][i] == '0')
-				valid(a, map, i, j);
-			i++;
-		}
-		j++;
 	}
 }
 
@@ -285,9 +174,9 @@ void validate_elements(t_data *data)
 
 int validate_data(char **raw, t_data *data)
 {
-	int i;
-	int j;
-	char **split_data;
+	int		i;
+	int		j;
+	char	**split_data;
 
 	i = 0;
 	while (i < 6)
@@ -308,7 +197,7 @@ int validate_data(char **raw, t_data *data)
 		ft_putstr_fd("Invalid map\n", 2);
 		return (-1);
 	}
-	check_map(data, &raw[i]);
+	validate_map(data, &raw[i]);
 	map_read(data->map, &data->player);
 	free_str(split_data);
 	return (0);
