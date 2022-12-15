@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 00:29:04 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 11:33:26 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,15 @@ static void map_read(char **map, t_player *player)
 	}
 }
 
-void set_color_data(char *type, char *val, t_data *data)
+void set_color_data(char type, char *val, t_data *data)
 {
 	char **split_data;
 	int i;
 	int j;
 	int tmp[3];
+
+	type = 'a';
+	data->f_color.r = 0;
 
 	i = 0;
 	split_data = ft_split(val, ',');
@@ -116,11 +119,13 @@ void set_color_data(char *type, char *val, t_data *data)
 	while (i < 3)
 	{
 		j = 0;
-		while (split_data[i][j])
-		{
-			if (!ft_isdigit(split_data[i][j++]))
-				exit_with_error("Error: Invalid color data\n");
-		}
+		// 예외 처리 필요
+		// while (split_data[i][j])
+		// {
+		// 	if (!ft_isdigit(split_data[i][j]))
+		// 		exit_with_error("Error: Invalid color data: isdigit error\n");
+		// 	j++;
+		// }
 		tmp[i] = ft_atoi(split_data[i]);
 		if (tmp[i] < 0 || tmp[i] > 255)
 			exit_with_error("Error: Invalid color data\n");
@@ -151,30 +156,47 @@ void set_info_data(char *type, char *val, t_data *data)
 	else if (ft_strncmp(type, "EA", 3) == 0)
 		data->texture[3] = ft_substr(val, 0, ft_strlen(val));
 	else if (ft_strncmp(type, "F", 2) == 0)
-		set_color_data("F", ft_substr(val, 0, ft_strlen(val)), data);
+		set_color_data('F', ft_substr(val, 0, ft_strlen(val)), data);
 	else if (ft_strncmp(type, "C", 2) == 0)
-		set_color_data("C", ft_substr(val, 0, ft_strlen(val)), data);
+		set_color_data('C', ft_substr(val, 0, ft_strlen(val)), data);
 	else
 		exit_with_error("Error: Invalid map info\n");
+}
+
+void validate_elements(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (data->texture[i] == NULL)
+			exit_with_error("Error: Texture is empty\n");
+		i++;
+	}
+	i = 0;
+	if (data->c_color.r == NULL || data->c_color.g == NULL || data->f_color.r == NULL || data->f_color.g == NULL || data->f_color.b == NULL)
+		exit_with_error("Error: Color is empty\n");
+	i++;
 }
 
 int validate_data(char **raw, t_data *data)
 {
 	int i;
 	int j;
-	int count;
+	// int count;
 	char **split_data;
 
 	i = 0;
-	j = 0;
 	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
 	// TODO 2. f_color, c_color 파싱 함수 추가
 	// TODO 3. 6가지 모두 잘 들어왔는지
-	while (raw[i])
+	while (i < 6)
 	{
-		while (ft_isspace(raw[i]))
-			i++;
+		// while (ft_isspace(raw[i][j]))
+		// 	j++;
 		split_data = ft_split(raw[i], ' ');
+		j = 0;
 		while (split_data[j])
 			j++;
 		if (j != 2)
