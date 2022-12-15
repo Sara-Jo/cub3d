@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 05:16:45 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 11:55:59 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ char	**file_to_rawdata(int fd, int depth)
 	else
 		des = file_to_rawdata(fd, depth + 1);
 	if (des)
-		des[depth] = line;
+	{
+		if (line && ft_strchr(line, '\n'))
+			des[depth] = ft_strndup(line, ft_strlen(line) - 1);
+		else if (line)
+			des[depth] = ft_strdup(line);
+		else
+			des[depth] = NULL;
+	}
 	return (des);
 }
 
@@ -59,9 +66,7 @@ static char	**load_map(char **raw, int depth)
 		map = load_map(raw + 1, depth + 1);
 	if (map)
 	{
-		if (*raw && ft_strchr(*raw, '\n'))
-			map[depth] = ft_strndup(*raw, ft_strlen(*raw) - 1);
-		else if (*raw)
+		if (*raw)
 			map[depth] = ft_strdup(*raw);
 		else
 			map[depth] = NULL;
@@ -104,7 +109,6 @@ static void	map_read(char **map, t_player *player)
 void	check_row(t_data *a, char *map_line)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (ft_isspace(map_line[i]))
@@ -164,51 +168,27 @@ void	check_map(t_data *a)
 int	validate_data(char **raw, t_data *data)
 {
 	int		i;
-	int		count;
 
 	i = 0;
-	count = 0;
 	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
 	// TODO 2. f_color, c_color 파싱 함수 추가 
 	// TODO 3. 6가지 모두 잘 들어왔는지
+	while (raw[i] && *(raw[i]) == '\0')
+		i++;
 	while (raw[i])
 	{
-		if (count == 6)
-			break ;
 		if (ft_strnstr(raw[i], "NO", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[0] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
+			data->texture[0] = ft_strdup(raw[i] + 3);
 		else if (ft_strnstr(raw[i], "SO", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[1] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
+			data->texture[1] = ft_strdup(raw[i] + 3);
 		else if (ft_strnstr(raw[i], "WE", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[2] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
+			data->texture[2] = ft_strdup(raw[i] + 3);
 		else if (ft_strnstr(raw[i], "EA", 2) && ft_isspace(*(raw[i] + 2)))
-		{
-			data->texture[3] = ft_strtrim(raw[i] + 3, "\n");
-			count++;
-		}
+			data->texture[3] = ft_strdup(raw[i] + 3);
 		else if (ft_strnstr(raw[i], "F", 1) && ft_isspace(*(raw[i] + 1)))
-		{
 			data->f_color = 1;
-			count++;
-		}
 		else if (ft_strnstr(raw[i], "C", 1) && ft_isspace(*(raw[i] + 1)))
-		{
 			data->c_color = 1;
-			count++;
-		}
-		else {
-			printf("Invalid map\n");
-			exit(1);
-		}
 		i++;
 	}
 	data->map = load_map(&raw[i], 0);
