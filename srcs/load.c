@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 21:40:19 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 01:16:08 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,9 @@ void	valid(t_data *a, char **map, int x, int y)
 		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
 		exit_with_error("Invalid map\n");
-	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
-		exit_with_error("Invalid map\n");
 	if (map[y][x + 1] == '\0')
+		exit_with_error("Invalid map\n");
+	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
 		exit_with_error("Invalid map\n");
 	map[y][x] = '2';
 	if (map[y + 1][x] == '1' && (map[y][x + 1] == '1' || map[y][x + 1] == '2'))
@@ -134,10 +134,9 @@ void	valid(t_data *a, char **map, int x, int y)
 		valid(a, map, x + 1, y);
 }
 
-void	check_map(t_data *a, char **map)
+void	map_width_height(t_data *a, char **map)
 {
 	int		i;
-	int		j;
 	int		width;
 
 	i = 0;
@@ -151,6 +150,44 @@ void	check_map(t_data *a, char **map)
 		i++;
 	}
 	a->map_height = i;
+}
+
+void	fill_map_width(t_data *a, char **map)
+{
+	int		i;
+	int		j;
+	int		width;
+	char	*line;
+
+	i = -1;
+	while (++i < a->map_height)
+	{
+		width = ft_strlen(map[i]);
+		if (width < a->map_width)
+		{
+			j = 0;
+			line = (char *)malloc(sizeof(char) * (a->map_width + 1));
+			if (!line)
+				exit_with_error("malloc\n");
+			ft_strlcpy(line, map[i], width + 1);
+			j = width;
+			while (j < a->map_width)
+				line[j++] = ' ';
+			line[j] = '\0';
+			free(map[i]);
+			map[i] = line;
+		}
+	}
+}
+
+void	check_map(t_data *a, char **map)
+{
+	int		i;
+	int		j;
+
+	map_width_height(a, map);
+	fill_map_width(a, map);
+	a->map = load_map(map, 0);
 	j = 0;
 	while (j < a->map_height)
 	{
@@ -250,13 +287,9 @@ int validate_data(char **raw, t_data *data)
 {
 	int i;
 	int j;
-	// int count;
 	char **split_data;
 
 	i = 0;
-	// TODO 1. 빈 줄, 하나 이상의 공백 처리(ft_isspace를 대체)
-	// TODO 2. f_color, c_color 파싱 함수 추가
-	// TODO 3. 6가지 모두 잘 들어왔는지
 	while (i < 6)
 	{
 		split_data = ft_split(raw[i], ' ');
@@ -276,8 +309,7 @@ int validate_data(char **raw, t_data *data)
 		return (-1);
 	}
 	check_map(data, &raw[i]);
-	// data->map = load_map(&raw[i], 0);
-	// map_read(data->map, &data->player);
+	map_read(data->map, &data->player);
 	free_str(split_data);
 	return (0);
 }

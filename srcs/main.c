@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 15:52:06 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 01:15:49 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ t_data init_data(void)
 	new.c_color.b = -1;
 	return (new);
 }
-
-
 
 int main(int argc, char **argv)
 {
