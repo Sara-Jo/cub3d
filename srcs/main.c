@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 14:48:35 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/15 19:54:41 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_data init_data(void)
 
 void exit_with_error(char *str)
 {
-	printf("%s\n", str);
+	printf("%s", str);
 	exit(1);
 }
 

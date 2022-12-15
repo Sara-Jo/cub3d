@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 15:38:00 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/15 19:23:45 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,9 @@ void	clear_plat_data(t_data *a);
 void	clear_exec_data(t_data *a);
 void	exit_with_error(char *str);
 void	init_color(t_data *data);
+int	ft_wordcount(char const *s, char *deli);
+char	*ft_firstword(const char *s, char *deli);
+char	**ft_inside_split(char const *s, char *deli, int nbr_of_words);
+char 	**ft_split_str(char const *s, char *deli);
 
 #endif

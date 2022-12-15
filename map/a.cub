@@ -1,12 +1,23 @@
 
 
-NO textures/pillar.xpm
-SO textures/bluestone.xpm
-WE textures/eagle.xpm
-EA textures/mossy.xpm
-F 220,100,0
-C 225,30,0
 
+
+NO      textures/pillar.xpm
+
+
+
+        SO  textures/bluestone.xpm
+
+
+
+
+WE   textures/eagle.xpm
+                        EA  textures/mossy.xpm
+                F  2a0,100,0
+
+
+
+C 225,30,0
 
 
 
