@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 15:16:02 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 16:08:44 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-#include "utils.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -88,12 +87,12 @@ void	map_read(char **map, t_player *player)
 	}
 }
 
-void set_color_data(char type, char *val, t_data *data)
+void	set_color_data(char type, char *val, t_data *data)
 {
-	char **split_data;
-	int i;
-	int j;
-	int tmp[3];
+	char	**split_data;
+	int		i;
+	int		j;
+	int		tmp[3];
 
 	i = 0;
 	split_data = ft_split(val, ',');
@@ -130,7 +129,7 @@ void set_color_data(char type, char *val, t_data *data)
 	}
 }
 
-void set_info_data(char *type, char *val, t_data *data)
+void	set_info_data(char *type, char *val, t_data *data)
 {
 	if (ft_strncmp(type, "NO", 3) == 0)
 		data->texture[0] = ft_substr(val, 0, ft_strlen(val));
@@ -148,9 +147,9 @@ void set_info_data(char *type, char *val, t_data *data)
 		exit_with_error("Error: Invalid map info\n");
 }
 
-int is_elements_complete(t_data *data)
+int	is_elements_complete(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -159,7 +158,8 @@ int is_elements_complete(t_data *data)
 			return (0);
 		i++;
 	}
-	if (data->c_color.r == -1 || data->c_color.g == -1 || data->c_color.b == -1 || data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
+	if (data->c_color.r == -1 || data->c_color.g == -1 || data->c_color.b == -1 
+		|| data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
 		return (0);
 	return (1);
 }
@@ -171,7 +171,7 @@ int validate_data(char **raw, t_data *data)
 	char	**split_data;
 
 	i = 0;
-	while (i < 6)
+	while (raw[i])
 	{
 		if (raw[i] && *raw[i] == '\0')
 		{
