@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:29:58 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:28:36 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int				handle_exit(t_data *a);
 int				handle_key_down(int keycode, t_data *a);
 
 // load.c
-int				access_file(char *file);
 char			**file_to_rawdata(int fd, int depth);
 void			set_color_data(char type, char *val, t_data *data);
 void			validate_data(char **raw, t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:39:50 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:29:13 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:28:42 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		create_rgb(int r, int g, int b);
 void	free_str(char **str);
 char	*ft_strndup(const char *s1, int n);
 void	exit_with_error(char *str);
+int		access_file(char *file);
 
 // ft_split_str.c
 char	**ft_freeall(char **s);
