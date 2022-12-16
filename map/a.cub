@@ -1,14 +1,22 @@
-SO      textures/bluestone.xpm
-NO textures/redbrick.xpm          
-        WE textures/eagle.xpm
-EA      textures/mossy.xpm
+
 F 220,100,0             
-                C                    100,100,100                
+WE textures/eagle.xpm
+
+SO textures/bluestone.xpm
+
+NO  		   textures/redbrick.xpm          
+
+EA textures/mossy.xpm
 
 
-1
-   
+	C 	100,100,100
 
 
-       
-	   
+111111
+100101
+101001
+1000N1
+111111
+
+
+
