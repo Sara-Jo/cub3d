@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 19:43:57 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 21:19:19 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	validate_color_data(char **color_data)
 			j++;
 		}
 		tmp = ft_atoi(color_data[i]);
-		if (tmp < 0 || tmp > 255)
+		if (ft_strlen(color_data[i]) > 3 || (tmp < 0 || tmp > 255))
 			exit_with_error("Invalid color data\n");
 		i++;
 	}
@@ -68,17 +68,17 @@ void	set_color_data(char type, char *val, t_data *data)
 
 static void	set_info_data(char *type, char *val, t_data *data)
 {
-	if (ft_strncmp(type, "NO", 3) == 0)
+	if (ft_strncmp(type, "NO", 3) == 0 && data->texture[0] == 0)
 		data->texture[0] = ft_substr(val, 0, ft_strlen(val));
-	else if (ft_strncmp(type, "SO", 3) == 0)
+	else if (ft_strncmp(type, "SO", 3) == 0 && data->texture[1] == 0)
 		data->texture[1] = ft_substr(val, 0, ft_strlen(val));
-	else if (ft_strncmp(type, "WE", 3) == 0)
+	else if (ft_strncmp(type, "WE", 3) == 0 && data->texture[2] == 0)
 		data->texture[2] = ft_substr(val, 0, ft_strlen(val));
-	else if (ft_strncmp(type, "EA", 3) == 0)
+	else if (ft_strncmp(type, "EA", 3) == 0 && data->texture[3] == 0)
 		data->texture[3] = ft_substr(val, 0, ft_strlen(val));
-	else if (ft_strncmp(type, "F", 2) == 0)
+	else if (ft_strncmp(type, "F", 2) == 0 && data->f_color.r == -1)
 		set_color_data('F', ft_substr(val, 0, ft_strlen(val)), data);
-	else if (ft_strncmp(type, "C", 2) == 0)
+	else if (ft_strncmp(type, "C", 2) == 0 && data->c_color.r == -1)
 		set_color_data('C', ft_substr(val, 0, ft_strlen(val)), data);
 	else
 		exit_with_error("Invalid map info\n");
@@ -108,9 +108,8 @@ void	validate_data(char **raw, t_data *data)
 	int		j;
 	char	**split_data;
 
-	i = -1;
-	split_data = NULL;
-	while (raw[++i])
+	i = 0;
+	while (raw[i])
 	{
 		if (raw[i] && *raw[i] == '\0')
 		{
@@ -127,6 +126,7 @@ void	validate_data(char **raw, t_data *data)
 			exit_with_error("Invalid map info\n");
 		set_info_data(split_data[0], split_data[1], data);
 		free_str(split_data);
+		i++;
 	}
 	check_map(data, &raw[i]);
 }
