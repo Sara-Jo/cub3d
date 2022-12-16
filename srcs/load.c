@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 02:00:20 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:16:02 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ int	access_file(char *file)
 		return (-1);
 	}
 	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
-	{
 		exit_with_error("Invalid file type\n");
-		// ft_putstr_fd("Error\n", 2);
-		// return (-1);
-	}
 	return (fd);
 }
 
@@ -99,9 +95,6 @@ void set_color_data(char type, char *val, t_data *data)
 	int j;
 	int tmp[3];
 
-	type = 'a';
-	data->f_color.r = 0;
-
 	i = 0;
 	split_data = ft_split(val, ',');
 	while (split_data[i])
@@ -112,13 +105,12 @@ void set_color_data(char type, char *val, t_data *data)
 	while (i < 3)
 	{
 		j = 0;
-		// 예외 처리 필요
-		// while (split_data[i][j])
-		// {
-		// 	if (!ft_isdigit(split_data[i][j]))
-		// 		exit_with_error("Error: Invalid color data: isdigit error\n");
-		// 	j++;
-		// }
+		while (split_data[i][j])
+		{
+			if (!ft_isdigit(split_data[i][j]))
+				exit_with_error("Error: Invalid color data\n");
+			j++;
+		}
 		tmp[i] = ft_atoi(split_data[i]);
 		if (tmp[i] < 0 || tmp[i] > 255)
 			exit_with_error("Error: Invalid color data\n");
@@ -156,7 +148,7 @@ void set_info_data(char *type, char *val, t_data *data)
 		exit_with_error("Error: Invalid map info\n");
 }
 
-void validate_elements(t_data *data)
+int is_elements_complete(t_data *data)
 {
 	int i;
 
@@ -164,13 +156,12 @@ void validate_elements(t_data *data)
 	while (i < 4)
 	{
 		if (data->texture[i] == NULL)
-			exit_with_error("Error: Texture is empty\n");
+			return (0);
 		i++;
 	}
-	i = 0;
 	if (data->c_color.r == -1 || data->c_color.g == -1 || data->c_color.b == -1 || data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
-		exit_with_error("Error: Color is empty\n");
-	i++;
+		return (0);
+	return (1);
 }
 
 int validate_data(char **raw, t_data *data)
@@ -182,7 +173,14 @@ int validate_data(char **raw, t_data *data)
 	i = 0;
 	while (i < 6)
 	{
-		split_data = ft_split(raw[i], ' ');
+		if (raw[i] && *raw[i] == '\0')
+		{
+			i++;
+			continue ;
+		}
+		if (is_elements_complete(data))
+			break ;
+		split_data = ft_split_str(raw[i], " \t\n\v\f\r");
 		j = 0;
 		while (split_data[j])
 			j++;
@@ -191,7 +189,7 @@ int validate_data(char **raw, t_data *data)
 		set_info_data(split_data[0], split_data[1], data);
 		i++;
 	}
-	while (raw[i] && *(raw[i]) == '\0')
+	while (raw[i] && *raw[i] == '\0')
 		i++;
 	if (raw[i] == NULL)
 	{

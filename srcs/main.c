@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:59:37 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:16:29 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_data	init_data(void)
 	new.sc.mlx_win = mlx_new_window(new.sc.mlx, WIDTH, HEIGHT, "cub3d");
 	new.img.ptr = mlx_new_image(new.sc.mlx, WIDTH, HEIGHT);
 	new.img.addr = mlx_get_data_addr(new.img.ptr, &new.img.bits_per_pixel, \
-									 &new.img.line_length, &new.img.endian);
+									&new.img.line_length, &new.img.endian);
 	new.f_color.r = -1;
 	new.f_color.g = -1;
 	new.f_color.b = -1;

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 20:43:17 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:07:49 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:17:02 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,133 @@ char	*ft_strndup(const char *s1, int n)
 		return (NULL);
 	ft_strlcpy(dst, s1, n + 1);
 	return (dst);
+}
+
+char	**ft_freeall(char **s)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s[i] != NULL)
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
+	return (NULL);
+}
+
+int	ft_wordcount(char const *s, char *deli)
+{
+	int	count;
+	int	i;
+	int j;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		j = 0;
+		while (deli[j])
+		{
+			if (s[i] == deli[j])
+			{
+				i++;
+				break;
+			}
+			j++;
+		}
+		if (j == (int)ft_strlen(deli))
+		{
+			count++;
+			while (s[i])
+			{
+				j = 0;
+				while (deli[j])
+				{
+					if (s[i] == deli[j])
+						break;
+					j++;
+				}
+				if (j != (int)ft_strlen(deli))
+					break;			
+				i++;
+			}
+		}
+	}
+	return (count);
+}
+
+char	*ft_firstword(const char *s, char *deli)
+{
+	size_t	len;
+	int 	i;
+	char	*ptr;
+
+	len = 0;
+	while (s[len])
+	{
+		i = 0;
+		while (deli[i])
+		{
+			if (s[len] == deli[i])
+				break;
+			i++;
+		}
+		if (i == (int)ft_strlen(deli))
+			len++;
+		else
+			break;
+	}
+	ptr = ft_calloc(len + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, s, len + 1);
+	return (ptr);
+}
+
+char	**ft_inside_split(char const *s, char *deli, int nbr_of_words)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**ptr;
+
+	i = 0;
+	j = 0;
+	ptr = (char **)ft_calloc(nbr_of_words + 1, sizeof(char *));
+	if (!ptr)
+		return (NULL);
+	while (i < nbr_of_words && s[j])
+	{
+		k = 0;
+		while (deli[k])
+		{
+			if (s[j] == deli[k])
+				break;
+			k++;
+		}
+		if (k == (int)ft_strlen(deli))
+		{
+			ptr[i] = ft_firstword(&s[j], deli);
+			j += ft_strlen(ptr[i]);
+			if (!ptr[i++])
+				return (ft_freeall(ptr));
+		}
+		else
+			j++;
+	}
+	return (ptr);
+}
+
+char 	**ft_split_str(char const *s, char *deli)
+{
+	int	nbr_of_words;
+
+	if (!s)
+		return (NULL);
+	nbr_of_words = ft_wordcount(s, deli);
+	return (ft_inside_split(s, deli, nbr_of_words));
 }
 
 void exit_with_error(char *str)

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 02:00:59 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:17:46 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,11 @@ int		access_file(char *file);
 void	load_texture(t_data *a);
 char	**file_to_rawdata(int fd, int depth);
 void	validate_map(t_data *a, char **map);
+void	exit_with_error(char *str);
+void	init_color(t_data *data);
+int	ft_wordcount(char const *s, char *deli);
+char	*ft_firstword(const char *s, char *deli);
+char	**ft_inside_split(char const *s, char *deli, int nbr_of_words);
+char 	**ft_split_str(char const *s, char *deli);
 
 #endif
