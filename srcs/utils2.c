@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:38:46 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/16 16:57:13 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 17:53:02 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	free_str(char **str)
 {
 	char	**start;
 
-	start = str;
-	while (*start)
+	if (str)
 	{
-		free(*start);
-		start++;
+		start = str;
+		while (*start)
+		{
+			free(*start);
+			start++;
+		}
+		free(str);
 	}
-	free(str);
 }
 
 char	*ft_strndup(const char *s1, int n)
