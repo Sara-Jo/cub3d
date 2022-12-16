@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:37:15 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:58:34 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,6 @@ int	access_file(char *file)
 	return (fd);
 }
 
-char	**file_to_rawdata(int fd, int depth)
-{
-	char	**des;
-	char	*line;
-
-	des = NULL;
-	line = get_next_line(fd);
-	if (line == NULL)
-		des = (char **)malloc(sizeof(char *) * (depth + 1));
-	else
-		des = file_to_rawdata(fd, depth + 1);
-	if (des)
-	{
-		if (line && ft_strchr(line, '\n'))
-			des[depth] = ft_strndup(line, ft_strlen(line) - 1);
-		else if (line)
-			des[depth] = ft_strdup(line);
-		else
-			des[depth] = NULL;
-		if (line)
-			free(line);
-	}
-	return (des);
-}
-
 void	set_color_data(char type, char *val, t_data *data)
 {
 	char	**split_data;
@@ -64,7 +39,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	int		tmp[3];
 
 	i = 0;
-	split_data = ft_split_str(val, ", \t\n\v\f\r");
+	split_data = ft_split(val, ',');
 	while (split_data[i])
 		i++;
 	if (i != 3)
@@ -96,6 +71,8 @@ void	set_color_data(char type, char *val, t_data *data)
 		data->c_color.g = tmp[1];
 		data->c_color.b = tmp[2];
 	}
+	free_str(split_data);
+	free(val);
 }
 
 static void	set_info_data(char *type, char *val, t_data *data)
@@ -140,8 +117,9 @@ void	validate_data(char **raw, t_data *data)
 	int		j;
 	char	**split_data;
 
-	i = 0;
-	while (raw[i])
+	i = -1;
+	split_data = NULL;
+	while (raw[++i])
 	{
 		if (raw[i] && *raw[i] == '\0')
 		{
@@ -157,7 +135,7 @@ void	validate_data(char **raw, t_data *data)
 		if (j != 2)
 			exit_with_error("Error: Invalid map info\n");
 		set_info_data(split_data[0], split_data[1], data);
-		i++;
+		free_str(split_data);
 	}
 	check_map(data, &raw[i]);
 }
