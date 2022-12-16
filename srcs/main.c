@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 15:10:24 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 15:16:29 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "mlx.h"
+#include "utils.h"
 #include <stdio.h>
 
-void clear_plat_data(t_data *a)
+void	clear_plat_data(t_data *a)
 {
 	if (a->img.ptr)
 		mlx_destroy_image(a->sc.mlx, a->img.ptr);
@@ -24,9 +25,9 @@ void clear_plat_data(t_data *a)
 		mlx_destroy_window(a->sc.mlx, a->sc.mlx_win);
 }
 
-void clear_exec_data(t_data *a)
+void	clear_exec_data(t_data *a)
 {
-	int i;
+	int	i;
 
 	if (a->map)
 		free_str(a->map);
@@ -50,10 +51,10 @@ void clear_exec_data(t_data *a)
 	}
 }
 
-void load_data(t_data *data, char *argv)
+void	load_data(t_data *data, char *argv)
 {
-	char **raw;
-	int fd;
+	char	**raw;
+	int		fd;
 
 	fd = access_file(argv);
 	if (fd == -1)
@@ -75,16 +76,16 @@ void load_data(t_data *data, char *argv)
 	load_texture(data);
 }
 
-t_data init_data(void)
+t_data	init_data(void)
 {
-	t_data new;
+	t_data	new;
 
 	ft_memset(&new, 0, sizeof(t_data));
 	new.sc.mlx = mlx_init();
 	new.sc.mlx_win = mlx_new_window(new.sc.mlx, WIDTH, HEIGHT, "cub3d");
 	new.img.ptr = mlx_new_image(new.sc.mlx, WIDTH, HEIGHT);
-	new.img.addr = mlx_get_data_addr(new.img.ptr, &new.img.bits_per_pixel,
-									 &new.img.line_length, &new.img.endian);
+	new.img.addr = mlx_get_data_addr(new.img.ptr, &new.img.bits_per_pixel, \
+									&new.img.line_length, &new.img.endian);
 	new.f_color.r = -1;
 	new.f_color.g = -1;
 	new.f_color.b = -1;
@@ -94,16 +95,9 @@ t_data init_data(void)
 	return (new);
 }
 
-void exit_with_error(char *str)
+int	main(int argc, char **argv)
 {
-	printf("%s", str);
-	exit(1);
-}
-
-
-int main(int argc, char **argv)
-{
-	t_data data;
+	t_data	data;
 
 	if (argc != 2)
 		exit_with_error("Error: Map file not entered\n");
