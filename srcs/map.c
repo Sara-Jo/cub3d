@@ -6,31 +6,13 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:07 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 15:44:48 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 16:54:11 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "utils.h"
-
-char	**load_map(char **raw, int depth)
-{
-	char	**map;
-
-	map = 0;
-	if (*raw == NULL)
-		map = (char **)malloc(sizeof(char *) * (depth + 1));
-	else
-		map = load_map(raw + 1, depth + 1);
-	if (map)
-	{
-		if (*raw)
-			map[depth] = ft_strdup(*raw);
-		else
-			map[depth] = NULL;
-	}
-	return (map);
-}
+#include "map.h"
 
 static void	valid(t_data *a, char **map, int x, int y)
 {
@@ -103,7 +85,7 @@ static void	fill_map_width(t_data *a, char **map)
 	}
 }
 
-void	validate_map(t_data *a, char **map)
+static void	validate_map(t_data *a, char **map)
 {
 	int		i;
 	int		j;
@@ -123,4 +105,17 @@ void	validate_map(t_data *a, char **map)
 		}
 		j++;
 	}
+}
+
+void	check_map(t_data *a, char **raw)
+{
+	int	i;
+
+	i = 0;
+	while (raw[i] && *(raw[i]) == '\0')
+		i++;
+	if (raw[i] == NULL)
+		exit_with_error("Invalid map\n");
+	validate_map(a, &raw[i]);
+	map_read(a->map, &a->player);
 }

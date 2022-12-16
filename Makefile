@@ -6,13 +6,13 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/16 01:36:25 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/16 16:26:50 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CFLAGS = -Wall -Werror -Wextra -g3
-SRCS = main.c utils.c render.c load.c hook.c vec.c player.c wall.c map.c
+SRCS = main.c utils.c render.c load.c hook.c vec.c player.c wall.c map.c map2.c
 SRCS_DIR = srcs
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=%.o)
@@ -40,12 +40,12 @@ $(NAME) : $(OBJECTS) $(LIBFT) $(MINILIBX)
 
 clean :
 	$(RM) $(OBJECTS) $(DEPENDS)
-	 @rmdir -p $(OBJS_DIR)
+	@rmdir -p $(OBJS_DIR)
 
 fclean : clean
 	$(RM) $(NAME)
-	 @make -C $(dir $(MINILIBX)) clean
-	 @make -C $(dir $(LIBFT)) fclean
+	@make -C $(dir $(MINILIBX)) clean
+	@make -C $(dir $(LIBFT)) fclean
 
 re	:
 	@make fclean
