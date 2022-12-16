@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+         #
+#    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/16 17:08:57 by sjo              ###   ########.fr        #
+#    Updated: 2022/12/16 17:31:24 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 CFLAGS = -Wall -Werror -Wextra -g3
-SRCS = main.c utils1.c utils2.c ft_split_str1.c ft_split_str2.c render.c load.c hook.c vec.c player.c wall.c map.c
+SRCS = main.c utils1.c utils2.c ft_split_str1.c ft_split_str2.c render.c \
+		load.c hook.c vec.c player.c wall.c map.c map2.c
 SRCS_DIR = srcs
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=%.o)
@@ -44,8 +45,8 @@ clean :
 
 fclean : clean
 	$(RM) $(NAME)
-	 @make -C $(dir $(MINILIBX)) clean
-	 @make -C $(dir $(LIBFT)) fclean
+	@make -C $(dir $(MINILIBX)) clean
+	@make -C $(dir $(LIBFT)) fclean
 
 re	:
 	@make fclean

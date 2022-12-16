@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/28 13:29:19 by sjo               #+#    #+#             */
-/*   Updated: 2022/08/08 13:57:06 by sjo              ###   ########.fr       */
+/*   Created: 2022/12/16 16:13:41 by hossong           #+#    #+#             */
+/*   Updated: 2022/12/16 16:54:18 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#ifndef MAP_H
+# define MAP_H
 
-void	ft_bzero(void *s, size_t n)
-{
-	while (n--)
-		*(char *)s++ = 0;
-}
+# include "main.h"
+
+char	**load_map(char **raw, int depth);
+void	map_read(char **map, t_player *player);
+void	check_map(t_data *a, char **raw);
+
+#endif

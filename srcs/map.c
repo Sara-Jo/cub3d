@@ -3,33 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:07 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 16:08:46 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 17:33:10 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-char	**load_map(char **raw, int depth)
-{
-	char	**map;
-
-	map = 0;
-	if (*raw == NULL)
-		map = (char **)malloc(sizeof(char *) * (depth + 1));
-	else
-		map = load_map(raw + 1, depth + 1);
-	if (map)
-	{
-		if (*raw)
-			map[depth] = ft_strdup(*raw);
-		else
-			map[depth] = NULL;
-	}
-	return (map);
-}
+#include "utils.h"
+#include "map.h"
 
 static void	valid(t_data *a, char **map, int x, int y)
 {
@@ -40,8 +23,6 @@ static void	valid(t_data *a, char **map, int x, int y)
 		|| (x == a->map_width - 1 && map[y][x] == '0'))
 		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
-		exit_with_error("Invalid map\n");
-	if (map[y][x + 1] == '\0')
 		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
 		exit_with_error("Invalid map\n");
@@ -58,13 +39,17 @@ static void	map_width_height(t_data *a, char **map)
 {
 	int		i;
 	int		width;
+	int		nl_count;
 
 	i = 0;
+	nl_count = 0;
 	while (map[i] != NULL)
 	{
+		if (nl_count != 0 && ft_strchr(map[i], '1'))
+			exit_with_error("Invalid map\n");
 		width = ft_strlen(map[i]);
 		if (width == 0 || ft_strchr(map[i], '1') == 0)
-			exit_with_error("Invalid map\n");
+			nl_count++;
 		if (a->map_width < width)
 			a->map_width = width;
 		i++;
@@ -100,7 +85,7 @@ static void	fill_map_width(t_data *a, char **map)
 	}
 }
 
-void	validate_map(t_data *a, char **map)
+static void	validate_map(t_data *a, char **map)
 {
 	int		i;
 	int		j;
@@ -120,4 +105,17 @@ void	validate_map(t_data *a, char **map)
 		}
 		j++;
 	}
+}
+
+void	check_map(t_data *a, char **raw)
+{
+	int	i;
+
+	i = 0;
+	while (raw[i] && *(raw[i]) == '\0')
+		i++;
+	if (raw[i] == NULL)
+		exit_with_error("Invalid map\n");
+	validate_map(a, &raw[i]);
+	map_read(a->map, &a->player);
 }

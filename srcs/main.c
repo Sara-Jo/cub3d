@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 16:08:46 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 17:15:21 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "mlx.h"
-#include <stdio.h>
+#include "utils.h"
 
 void	clear_plat_data(t_data *a)
 {
@@ -50,7 +50,7 @@ void	clear_exec_data(t_data *a)
 	}
 }
 
-void	load_data(t_data *data, char *argv)
+static void	load_data(t_data *data, char *argv)
 {
 	char	**raw;
 	int		fd;
@@ -64,18 +64,12 @@ void	load_data(t_data *data, char *argv)
 	}
 	raw = file_to_rawdata(fd, 0);
 	close(fd);
-	if (validate_data(raw, data) == -1)
-	{
-		clear_exec_data(data);
-		clear_plat_data(data);
-		ft_putstr_fd("Error\n", 2);
-		exit(1);
-	}
+	validate_data(raw, data);
 	free_str(raw);
 	load_texture(data);
 }
 
-t_data	init_data(void)
+static t_data	init_data(void)
 {
 	t_data	new;
 

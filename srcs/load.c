@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 16:08:44 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 17:37:15 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "utils.h"
+#include "map.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -54,39 +56,6 @@ char	**file_to_rawdata(int fd, int depth)
 	return (des);
 }
 
-void	map_read(char **map, t_player *player)
-{
-	char	*line;
-	int		x;
-	int		y;
-
-	x = 0;
-	while (*map)
-	{
-		y = 0;
-		line = *map;
-		while (*line)
-		{
-			if (ft_strchr("01NSEW \t\r\n\v\f", *line) == NULL)
-				exit_with_error("Error: Invalid map\n");
-			if (player->player_dir && ft_strchr("NSEW", *line))
-				exit_with_error("Error: Invalid map\n");
-			if (*line == 'N')
-				*player = set_player(*line, x, y, 0);
-			else if (*line == 'S')
-				*player = set_player(*line, x, y, M_PI);
-			else if (*line == 'E')
-				*player = set_player(*line, x, y, M_PI / (-2.0));
-			else if (*line == 'W')
-				*player = set_player(*line, x, y, M_PI / 2.0);
-			line++;
-			y++;
-		}
-		x++;
-		map++;
-	}
-}
-
 void	set_color_data(char type, char *val, t_data *data)
 {
 	char	**split_data;
@@ -95,7 +64,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	int		tmp[3];
 
 	i = 0;
-	split_data = ft_split(val, ',');
+	split_data = ft_split_str(val, ", \t\n\v\f\r");
 	while (split_data[i])
 		i++;
 	if (i != 3)
@@ -129,7 +98,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	}
 }
 
-void	set_info_data(char *type, char *val, t_data *data)
+static void	set_info_data(char *type, char *val, t_data *data)
 {
 	if (ft_strncmp(type, "NO", 3) == 0)
 		data->texture[0] = ft_substr(val, 0, ft_strlen(val));
@@ -147,7 +116,7 @@ void	set_info_data(char *type, char *val, t_data *data)
 		exit_with_error("Error: Invalid map info\n");
 }
 
-int	is_elements_complete(t_data *data)
+static int	is_elements_complete(t_data *data)
 {
 	int	i;
 
@@ -158,13 +127,14 @@ int	is_elements_complete(t_data *data)
 			return (0);
 		i++;
 	}
-	if (data->c_color.r == -1 || data->c_color.g == -1 || data->c_color.b == -1 
-		|| data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
+	if (data->c_color.r == -1 || data->c_color.g == -1 \
+		|| data->c_color.b == -1 || data->f_color.r == -1 \
+		|| data->f_color.g == -1 || data->f_color.b == -1)
 		return (0);
 	return (1);
 }
 
-int validate_data(char **raw, t_data *data)
+void	validate_data(char **raw, t_data *data)
 {
 	int		i;
 	int		j;
@@ -189,15 +159,5 @@ int validate_data(char **raw, t_data *data)
 		set_info_data(split_data[0], split_data[1], data);
 		i++;
 	}
-	while (raw[i] && *raw[i] == '\0')
-		i++;
-	if (raw[i] == NULL)
-	{
-		ft_putstr_fd("Invalid map\n", 2);
-		return (-1);
-	}
-	validate_map(data, &raw[i]);
-	map_read(data->map, &data->player);
-	free_str(split_data);
-	return (0);
+	check_map(data, &raw[i]);
 }
