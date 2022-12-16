@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 19:27:23 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 19:43:57 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	validate_color_data(char **color_data)
 		while (color_data[i][j])
 		{
 			if (!ft_isdigit(color_data[i][j]))
-				exit_with_error("Error: Invalid color data\n");
+				exit_with_error("Invalid color data\n");
 			j++;
 		}
 		tmp = ft_atoi(color_data[i]);
 		if (tmp < 0 || tmp > 255)
-			exit_with_error("Error: Invalid color data\n");
+			exit_with_error("Invalid color data\n");
 		i++;
 	}
 }
@@ -48,7 +48,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	while (split_data[i])
 		i++;
 	if (i != 3)
-		exit_with_error("Error: Invalid color data\n");
+		exit_with_error("Invalid color data\n");
 	validate_color_data(split_data);
 	if (type == 'F')
 	{
@@ -81,7 +81,7 @@ static void	set_info_data(char *type, char *val, t_data *data)
 	else if (ft_strncmp(type, "C", 2) == 0)
 		set_color_data('C', ft_substr(val, 0, ft_strlen(val)), data);
 	else
-		exit_with_error("Error: Invalid map info\n");
+		exit_with_error("Invalid map info\n");
 }
 
 static int	is_elements_complete(t_data *data)
@@ -124,7 +124,7 @@ void	validate_data(char **raw, t_data *data)
 		while (split_data[j])
 			j++;
 		if (j != 2)
-			exit_with_error("Error: Invalid map info\n");
+			exit_with_error("Invalid map info\n");
 		set_info_data(split_data[0], split_data[1], data);
 		free_str(split_data);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:38:46 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/16 19:27:26 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 19:36:20 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*ft_strndup(const char *s1, int n)
 
 void	exit_with_error(char *str)
 {
+	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(str, 2);
 	exit(1);
 }
@@ -56,6 +57,7 @@ int	access_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
+		ft_putstr_fd("Error\n", 2);
 		perror(file);
 		return (-1);
 	}
