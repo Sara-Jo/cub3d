@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:55:15 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:15:21 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:27:39 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static t_data	init_data(void)
 
 	ft_memset(&new, 0, sizeof(t_data));
 	new.sc.mlx = mlx_init();
-	new.sc.mlx_win = mlx_new_window(new.sc.mlx, WIDTH, HEIGHT, "cub3d");
+	new.sc.mlx_win = mlx_new_window(new.sc.mlx, WIDTH, HEIGHT, "cub3D");
 	new.img.ptr = mlx_new_image(new.sc.mlx, WIDTH, HEIGHT);
 	new.img.addr = mlx_get_data_addr(new.img.ptr, &new.img.bits_per_pixel, \
 									&new.img.line_length, &new.img.endian);
@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		exit_with_error("Error: Map file not entered\n");
+		exit_with_error("Map file not entered\n");
 	data = init_data();
 	load_data(&data, argv[1]);
 	render(&data);

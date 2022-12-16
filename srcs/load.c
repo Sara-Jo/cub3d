@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 18:58:34 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:26:12 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	while (split_data[i])
 		i++;
 	if (i != 3)
-		exit_with_error("Error: Invalid color data\n");
+		exit_with_error("Invalid color data\n");
 	i = 0;
 	while (i < 3)
 	{
@@ -51,12 +51,12 @@ void	set_color_data(char type, char *val, t_data *data)
 		while (split_data[i][j])
 		{
 			if (!ft_isdigit(split_data[i][j]))
-				exit_with_error("Error: Invalid color data\n");
+				exit_with_error("Invalid color data\n");
 			j++;
 		}
 		tmp[i] = ft_atoi(split_data[i]);
 		if (tmp[i] < 0 || tmp[i] > 255)
-			exit_with_error("Error: Invalid color data\n");
+			exit_with_error("Invalid color data\n");
 		i++;
 	}
 	if (type == 'F')
@@ -90,7 +90,7 @@ static void	set_info_data(char *type, char *val, t_data *data)
 	else if (ft_strncmp(type, "C", 2) == 0)
 		set_color_data('C', ft_substr(val, 0, ft_strlen(val)), data);
 	else
-		exit_with_error("Error: Invalid map info\n");
+		exit_with_error("Invalid map info\n");
 }
 
 static int	is_elements_complete(t_data *data)
@@ -133,7 +133,7 @@ void	validate_data(char **raw, t_data *data)
 		while (split_data[j])
 			j++;
 		if (j != 2)
-			exit_with_error("Error: Invalid map info\n");
+			exit_with_error("Invalid map info\n");
 		set_info_data(split_data[0], split_data[1], data);
 		free_str(split_data);
 	}

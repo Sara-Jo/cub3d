@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:38:46 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/16 17:53:02 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:24:48 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_strndup(const char *s1, int n)
 
 void	exit_with_error(char *str)
 {
+	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(str, 2);
 	exit(1);
 }
