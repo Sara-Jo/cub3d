@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:07 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 15:16:39 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:44:48 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	valid(t_data *a, char **map, int x, int y)
 		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
 		exit_with_error("Invalid map\n");
-	if (map[y][x + 1] == '\0')
-		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
 		exit_with_error("Invalid map\n");
 	map[y][x] = '2';
@@ -59,13 +57,17 @@ static void	map_width_height(t_data *a, char **map)
 {
 	int		i;
 	int		width;
+	int		nl_count;
 
 	i = 0;
+	nl_count = 0;
 	while (map[i] != NULL)
 	{
+		if (nl_count != 0 && ft_strchr(map[i], '1'))
+			exit_with_error("Invalid map\n");
 		width = ft_strlen(map[i]);
 		if (width == 0 || ft_strchr(map[i], '1') == 0)
-			exit_with_error("Invalid map\n");
+			nl_count++;
 		if (a->map_width < width)
 			a->map_width = width;
 		i++;
