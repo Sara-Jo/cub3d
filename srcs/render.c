@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:33:08 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 16:16:29 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:27:15 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	render(t_data *a)
 		x = 0;
 		while (x < WIDTH)
 		{
-			color = 0xffff00;
+			color = create_rgb(a->f_color.r, a->f_color.g, a->f_color.b);
 			my_mlx_pixel_put(&a->img, x, HEIGHT / 2 + y, color);
-			color = 0xff00ff;
+			color = create_rgb(a->c_color.r, a->c_color.g, a->c_color.b);
 			my_mlx_pixel_put(&a->img, x, HEIGHT / 2 - y - 1, color);
 			x++;
 		}
