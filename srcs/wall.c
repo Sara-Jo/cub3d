@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/14 17:20:59 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:41:14 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,16 @@ static void	draw_texture(int i, t_cast *ele, t_data *a)
 	{
 		tex_y = (int)src.tex_pos & (TEXHEIGHT - 1);
 		src.tex_pos += src.step;
-		if (ele->side == 1)
+		if (ele->side == 0)
 		{
 			color = a->tex_addr[0][TEXHEIGHT * tex_y + src.tex_x];
-			if (ele->ray_dir.y < 0)
+			if (ele->ray_dir.x < 0)
 				color = a->tex_addr[1][TEXHEIGHT * tex_y + src.tex_x];
 		}
-		else
+		else if (ele->side == 1)
 		{
 			color = a->tex_addr[2][TEXHEIGHT * tex_y + src.tex_x];
-			if (ele->ray_dir.x < 0)
+			if (ele->ray_dir.y < 0)
 				color = a->tex_addr[3][TEXHEIGHT * tex_y + src.tex_x];
 		}
 		my_mlx_pixel_put(&a->img, i, src.draw_start, color);
