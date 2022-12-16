@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 01:34:07 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:33:10 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 20:02:26 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 static void	valid(t_data *a, char **map, int x, int y)
 {
-	if ((y == 0 && map[y][x] == '0') \
-		|| (y == a->map_height - 1 && map[y][x] == '0'))
+	if ((y == 0 && valid_char(map[y][x])) \
+		|| (y == a->map_height - 1 && valid_char(map[y][x])))
 		exit_with_error("Invalid map\n");
-	if ((x == 0 && map[y][x] == '0') \
-		|| (x == a->map_width - 1 && map[y][x] == '0'))
+	if ((x == 0 && valid_char(map[y][x])) \
+		|| (x == a->map_width - 1 && valid_char(map[y][x])))
 		exit_with_error("Invalid map\n");
 	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
 		exit_with_error("Invalid map\n");
@@ -29,9 +29,9 @@ static void	valid(t_data *a, char **map, int x, int y)
 	map[y][x] = '2';
 	if (map[y + 1][x] == '1' && (map[y][x + 1] == '1' || map[y][x + 1] == '2'))
 		return ;
-	if (map[y + 1][x] && map[y + 1][x] == '0')
+	if (map[y + 1][x] && valid_char(map[y + 1][x]))
 		valid(a, map, x, y + 1);
-	if (map[y][x + 1] && map[y][x + 1] == '0')
+	if (map[y][x + 1] && valid_char(map[y][x + 1]))
 		valid(a, map, x + 1, y);
 }
 
@@ -99,7 +99,7 @@ static void	validate_map(t_data *a, char **map)
 		i = 0;
 		while (i < a->map_width)
 		{
-			if (map[j][i] == '0')
+			if (valid_char(map[j][i]))
 				valid(a, map, i, j);
 			i++;
 		}

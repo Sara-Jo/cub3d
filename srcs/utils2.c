@@ -6,13 +6,15 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:38:46 by sjo               #+#    #+#             */
-/*   Updated: 2022/12/16 19:24:48 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:36:20 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "libft.h"
+#include "main.h"
 
 void	free_str(char **str)
 {
@@ -46,4 +48,20 @@ void	exit_with_error(char *str)
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(str, 2);
 	exit(1);
+}
+
+int	access_file(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error\n", 2);
+		perror(file);
+		return (-1);
+	}
+	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
+		exit_with_error("Invalid file type\n");
+	return (fd);
 }
