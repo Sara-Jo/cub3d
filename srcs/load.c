@@ -3,40 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 18:58:34 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 19:27:23 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "utils.h"
 #include "map.h"
-#include <stdio.h>
 #include <math.h>
 
-int	access_file(char *file)
+void	validate_color_data(char **color_data)
 {
-	int	fd;
+	int	i;
+	int	j;
+	int	tmp;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	i = 0;
+	while (i < 3)
 	{
-		perror(file);
-		return (-1);
+		j = 0;
+		while (color_data[i][j])
+		{
+			if (!ft_isdigit(color_data[i][j]))
+				exit_with_error("Error: Invalid color data\n");
+			j++;
+		}
+		tmp = ft_atoi(color_data[i]);
+		if (tmp < 0 || tmp > 255)
+			exit_with_error("Error: Invalid color data\n");
+		i++;
 	}
-	if (ft_strncmp(ft_strrchr(file, '.'), ".cub", 5) != 0)
-		exit_with_error("Invalid file type\n");
-	return (fd);
 }
 
 void	set_color_data(char type, char *val, t_data *data)
 {
 	char	**split_data;
 	int		i;
-	int		j;
-	int		tmp[3];
 
 	i = 0;
 	split_data = ft_split(val, ',');
@@ -44,32 +49,18 @@ void	set_color_data(char type, char *val, t_data *data)
 		i++;
 	if (i != 3)
 		exit_with_error("Error: Invalid color data\n");
-	i = 0;
-	while (i < 3)
-	{
-		j = 0;
-		while (split_data[i][j])
-		{
-			if (!ft_isdigit(split_data[i][j]))
-				exit_with_error("Error: Invalid color data\n");
-			j++;
-		}
-		tmp[i] = ft_atoi(split_data[i]);
-		if (tmp[i] < 0 || tmp[i] > 255)
-			exit_with_error("Error: Invalid color data\n");
-		i++;
-	}
+	validate_color_data(split_data);
 	if (type == 'F')
 	{
-		data->f_color.r = tmp[0];
-		data->f_color.g = tmp[1];
-		data->f_color.b = tmp[2];
+		data->f_color.r = ft_atoi(split_data[0]);
+		data->f_color.g = ft_atoi(split_data[1]);
+		data->f_color.b = ft_atoi(split_data[2]);
 	}
 	else if (type == 'C')
 	{
-		data->c_color.r = tmp[0];
-		data->c_color.g = tmp[1];
-		data->c_color.b = tmp[2];
+		data->c_color.r = ft_atoi(split_data[0]);
+		data->c_color.g = ft_atoi(split_data[1]);
+		data->c_color.b = ft_atoi(split_data[2]);
 	}
 	free_str(split_data);
 	free(val);
