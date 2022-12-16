@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 20:39:08 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 15:12:20 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char **file_to_rawdata(int fd, int depth)
 	return (des);
 }
 
-static char **load_map(char **raw, int depth)
+char **load_map(char **raw, int depth)
 {
 	char **map;
 
@@ -73,7 +73,7 @@ static char **load_map(char **raw, int depth)
 // TODO 1: 6가지 유효한 문자인지 체크: OK
 // TODO 2: 벽으로 둘러싸여 있는지 체크
 // TODO 3: 플레이어가 하나만 존재하는지 체크
-static void map_read(char **map, t_player *player)
+void map_read(char **map, t_player *player)
 {
 	char *line;
 	int x;
@@ -86,7 +86,9 @@ static void map_read(char **map, t_player *player)
 		line = *map;
 		while (*line)
 		{
-			if (ft_strchr("01NSEW ", *line) == NULL)
+			if (ft_strchr("01NSEW \t\r\n\v\f", *line) == NULL)
+				exit_with_error("Error: Invalid map\n");
+			if (player->player_dir && ft_strchr("NSEW", *line))
 				exit_with_error("Error: Invalid map\n");
 			if (*line == 'N')
 				*player = set_player(*line, x, y, 0);
@@ -101,6 +103,60 @@ static void map_read(char **map, t_player *player)
 		}
 		x++;
 		map++;
+	}
+}
+
+void	valid(t_data *a, char **map, int x, int y)
+{
+	if ((y == 0 && map[y][x] == '0') \
+		|| (y == a->map_height - 1 && map[y][x] == '0'))
+		exit_with_error("Invalid map\n");
+	if ((x == 0 && map[y][x] == '0') \
+		|| (x == a->map_width - 1 && map[y][x] == '0'))
+		exit_with_error("Invalid map\n");
+	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
+		exit_with_error("Invalid map\n");
+	if (ft_isspace(map[y + 1][x]) || ft_isspace(map[y - 1][x]))
+		exit_with_error("Invalid map\n");
+	if (map[y][x + 1] == '\0')
+		exit_with_error("Invalid map\n");
+	map[y][x] = '2';
+	if (map[y + 1][x] == '1' && (map[y][x + 1] == '1' || map[y][x + 1] == '2'))
+		return ;
+	if (map[y + 1][x] && map[y + 1][x] == '0')
+		valid(a, map, x, y + 1);
+	if (map[y][x + 1] && map[y][x + 1] == '0')
+		valid(a, map, x + 1, y);
+}
+
+void	check_map(t_data *a, char **map)
+{
+	int		i;
+	int		j;
+	int		width;
+
+	i = 0;
+	while (map[i] != NULL)
+	{
+		width = ft_strlen(map[i]);
+		if (width == 0 || ft_strchr(map[i], '1') == 0)
+			exit_with_error("Invalid map\n");
+		if (a->map_width < width)
+			a->map_width = width;
+		i++;
+	}
+	a->map_height = i;
+	j = 0;
+	while (j < a->map_height)
+	{
+		i = 0;
+		while (i < a->map_width)
+		{
+			if (map[j][i] == '0')
+				valid(a, map, i, j);
+			i++;
+		}
+		j++;
 	}
 }
 
@@ -214,6 +270,14 @@ int validate_data(char **raw, t_data *data)
 		i++;
 	data->map = load_map(&raw[i], 0);
 	map_read(data->map, &data->player);
+	if (raw[i] == NULL)
+	{
+		ft_putstr_fd("Invalid map\n", 2);
+		return (-1);
+	}
+	check_map(data, &raw[i]);
+	// data->map = load_map(&raw[i], 0);
+	// map_read(data->map, &data->player);
 	free_str(split_data);
 	return (0);
 }

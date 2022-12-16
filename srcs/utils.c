@@ -6,7 +6,7 @@
 /*   By: sjo <sjo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 20:43:17 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/15 19:23:44 by sjo              ###   ########.fr       */
+/*   Updated: 2022/12/16 15:11:02 by sjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,4 +201,10 @@ char 	**ft_split_str(char const *s, char *deli)
 		return (NULL);
 	nbr_of_words = ft_wordcount(s, deli);
 	return (ft_inside_split(s, deli, nbr_of_words));
+}
+
+void exit_with_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(1);
 }
