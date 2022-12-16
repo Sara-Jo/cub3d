@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 15:41:14 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:26:25 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <math.h>
 #include <limits.h>
 
-void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
+static void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 {
 	dist->delta = set_dist(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
 	if (ray_dir->x == 0)
@@ -37,7 +37,7 @@ void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 	}
 }
 
-void	calc_perpendicular(t_cast *ele, t_dist3 *dist, char **world)
+static void	calc_perpendicular(t_cast *ele, t_dist3 *dist, char **world)
 {
 	int		hit;
 

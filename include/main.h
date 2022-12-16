@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:56:04 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:00:46 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:29:58 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,24 @@ typedef struct s_data
 	t_player	player;
 }	t_data;
 
-int		handle_key_down(int keycode, t_data *param);
-int		handle_exit(t_data *a);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void	clear_plat_data(t_data *a);
-void	clear_exec_data(t_data *a);
-void	validate_data(char **raw, t_data *data);
-void	render(t_data *data);
-void	cast_wall(t_data *a);
+// main.c
+void			clear_plat_data(t_data *a);
+void			clear_exec_data(t_data *a);
 
-int		access_file(char *file);
-void	load_texture(t_data *a);
-char	**file_to_rawdata(int fd, int depth);
+// hook.c
+int				handle_exit(t_data *a);
+int				handle_key_down(int keycode, t_data *a);
+
+// load.c
+int				access_file(char *file);
+char			**file_to_rawdata(int fd, int depth);
+void			set_color_data(char type, char *val, t_data *data);
+void			validate_data(char **raw, t_data *data);
+
+// render.c
+void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void			load_texture(t_data *a);
+void			render(t_data *a);
+void			cast_wall(t_data *a);
 
 #endif

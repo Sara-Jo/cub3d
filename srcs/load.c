@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:40:00 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:00:25 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:37:15 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	int		tmp[3];
 
 	i = 0;
-	split_data = ft_split(val, ',');
+	split_data = ft_split_str(val, ", \t\n\v\f\r");
 	while (split_data[i])
 		i++;
 	if (i != 3)
@@ -98,7 +98,7 @@ void	set_color_data(char type, char *val, t_data *data)
 	}
 }
 
-void	set_info_data(char *type, char *val, t_data *data)
+static void	set_info_data(char *type, char *val, t_data *data)
 {
 	if (ft_strncmp(type, "NO", 3) == 0)
 		data->texture[0] = ft_substr(val, 0, ft_strlen(val));
@@ -116,7 +116,7 @@ void	set_info_data(char *type, char *val, t_data *data)
 		exit_with_error("Error: Invalid map info\n");
 }
 
-int	is_elements_complete(t_data *data)
+static int	is_elements_complete(t_data *data)
 {
 	int	i;
 
@@ -127,7 +127,9 @@ int	is_elements_complete(t_data *data)
 			return (0);
 		i++;
 	}
-	if (data->c_color.r == -1 || data->c_color.g == -1 || data->c_color.b == -1 || data->f_color.r == -1 || data->f_color.g == -1 || data->f_color.b == -1)
+	if (data->c_color.r == -1 || data->c_color.g == -1 \
+		|| data->c_color.b == -1 || data->f_color.r == -1 \
+		|| data->f_color.g == -1 || data->f_color.b == -1)
 		return (0);
 	return (1);
 }
