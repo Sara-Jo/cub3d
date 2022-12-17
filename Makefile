@@ -6,12 +6,12 @@
 #    By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 19:45:50 by hossong           #+#    #+#              #
-#    Updated: 2022/12/16 20:47:59 by hossong          ###   ########.fr        #
+#    Updated: 2022/12/17 13:36:40 by hossong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 SRCS = main.c utils1.c utils2.c ft_split_str1.c ft_split_str2.c render.c \
 		load.c hook.c vec.c player.c wall.c map.c map2.c
 SRCS_DIR = srcs

@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 16:03:33 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 20:03:31 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/17 13:34:44 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ void	map_read(char **map, t_player *player)
 	int		x;
 	int		y;
 
-	x = 0;
+	y = 0;
 	while (*map)
 	{
 		line = *map;
-		y = 0;
+		x = 0;
 		while (*line)
 		{
 			map_line_valid_symbol(*line, player, x, y);
 			line++;
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 		map++;
 	}
 	if (!player->player_dir)

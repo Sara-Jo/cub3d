@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 17:26:25 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/17 13:56:20 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ static void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 	if (ray_dir->y == 0)
 		dist->delta.y = 1e30;
 	dist->step = set_dist(1.0, 1.0);
-	dist->side = set_dist((map.x + 1.0 - p->row) * dist->delta.x, \
-							(map.y + 1.0 - p->col) * dist->delta.y);
+	dist->side = set_dist((map.x + 1.0 - p->col) * dist->delta.x, \
+							(map.y + 1.0 - p->row) * dist->delta.y);
 	if (ray_dir->x < 0)
 	{
 		dist->step.x = -1;
-		dist->side.x = (p->row - map.x) * dist->delta.x;
+		dist->side.x = (p->col - map.x) * dist->delta.x;
 	}
 	if (ray_dir->y < 0)
 	{
 		dist->step.y = -1;
-		dist->side.y = (p->col - map.y) * dist->delta.y;
+		dist->side.y = (p->row - map.y) * dist->delta.y;
 	}
 }
 
@@ -48,20 +48,20 @@ static void	calc_perpendicular(t_cast *ele, t_dist3 *dist, char **world)
 		{
 			dist->side.x += dist->delta.x;
 			ele->map.x += dist->step.x;
-			ele->side = 0;
+			ele->side = 1;
 		}
 		else
 		{
 			dist->side.y += dist->delta.y;
 			ele->map.y += dist->step.y;
-			ele->side = 1;
+			ele->side = 0;
 		}
-		if (world[ele->map.x][ele->map.y] == '1')
+		if (world[ele->map.y][ele->map.x] == '1')
 			hit = 1;
 	}
-	ele->perp_wall_dist = dist->side.x - dist->delta.x;
+	ele->perp_wall_dist = dist->side.y - dist->delta.y;
 	if (ele->side == 1)
-		ele->perp_wall_dist = dist->side.y - dist->delta.y;
+		ele->perp_wall_dist = dist->side.x - dist->delta.x;
 }
 
 static t_draw	set_draw_src(t_cast *ele, t_player *player)
@@ -77,14 +77,14 @@ static t_draw	set_draw_src(t_cast *ele, t_player *player)
 	src.draw_end = src.line_height / 2 + HEIGHT / 2;
 	if (src.draw_end <= 0 || src.draw_end >= HEIGHT)
 		src.draw_end = HEIGHT - 1;
-	src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.x;
-	if (ele->side == 0)
-		src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.y;
+	src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.x;
+	if (ele->side == 1)
+		src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.y;
 	src.wall_x -= floor(src.wall_x);
 	src.tex_x = (int)(src.wall_x * (double)TEXWIDTH);
-	if (ele->side == 0 && ele->ray_dir.x > 0)
+	if (ele->side == 1 && ele->ray_dir.x > 0)
 		src.tex_x = TEXWIDTH - src.tex_x - 1;
-	if (ele->side == 1 && ele->ray_dir.y < 0)
+	if (ele->side == 0 && ele->ray_dir.y < 0)
 		src.tex_x = TEXWIDTH - src.tex_x - 1;
 	src.step = 1.0 * TEXHEIGHT / src.line_height;
 	src.tex_pos = (src.draw_start - HEIGHT / 2 + src.line_height / 2) \
@@ -103,13 +103,13 @@ static void	draw_texture(int i, t_cast *ele, t_data *a)
 	{
 		tex_y = (int)src.tex_pos & (TEXHEIGHT - 1);
 		src.tex_pos += src.step;
-		if (ele->side == 0)
+		if (ele->side == 1)
 		{
 			color = a->tex_addr[0][TEXHEIGHT * tex_y + src.tex_x];
 			if (ele->ray_dir.x < 0)
 				color = a->tex_addr[1][TEXHEIGHT * tex_y + src.tex_x];
 		}
-		else if (ele->side == 1)
+		else if (ele->side == 0)
 		{
 			color = a->tex_addr[2][TEXHEIGHT * tex_y + src.tex_x];
 			if (ele->ray_dir.y < 0)
@@ -132,7 +132,7 @@ void	cast_wall(t_data *a)
 	{
 		cam_x = 2 * i / (double)WIDTH - 1;
 		ele.ray_dir = v_sum(a->player.dir, v_multiple(a->player.plane, cam_x));
-		ele.map = set_pos((int)a->player.row, (int)a->player.col);
+		ele.map = set_pos((int)a->player.col, (int)a->player.row);
 		set_dist3(&dist, &ele.ray_dir, ele.map, &a->player);
 		calc_perpendicular(&ele, &dist, a->map);
 		draw_texture(i, &ele, a);
