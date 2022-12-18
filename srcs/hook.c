@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/18 14:17:15 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/18 14:32:53 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static void	move_pos_negative(t_data *a, t_vec2 v, int postive)
 	if (postive)
 	{
 		if (a->map[move_postive.y][(int)a->player.col] != '1')
-			a->player.col += v.x * move_speed;
-		if (a->map[(int)a->player.row][move_postive.x] != '1')
 			a->player.row += v.y * move_speed;
+		if (a->map[(int)a->player.row][move_postive.x] != '1')
+			a->player.col += v.x * move_speed;
 	}
 	else
 	{
 		if (a->map[move_negative.y][(int)a->player.col] != '1')
-			a->player.col -= v.x * move_speed;
-		if (a->map[(int)a->player.row][move_negative.x] != '1')
 			a->player.row -= v.y * move_speed;
+		if (a->map[(int)a->player.row][move_negative.x] != '1')
+			a->player.col -= v.x * move_speed;
 	}
 }
 
