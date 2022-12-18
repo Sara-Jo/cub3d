@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 18:51:42 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/17 14:30:58 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/18 14:20:02 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_player	set_player(char dir, int x, int y, double rad)
 	t_player	new;
 
 	new.dir = vec2(0.0, -1.0);
-	new.plane = vec2(-0.66, 0.0);
+	new.plane = vec2(0.66, 0.0);
 	new.player_dir = dir;
 	new.col = x;
 	new.row = y;

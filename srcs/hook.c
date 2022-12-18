@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:21:47 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/16 01:37:37 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/18 14:17:15 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ static void	move_pos_negative(t_data *a, t_vec2 v, int postive)
 	t_pos	move_negative;
 
 	move_speed = 0.6;
-	move_postive = set_pos(a->player.row + v.x * move_speed, \
-							a->player.col + v.y * move_speed);
-	move_negative = set_pos(a->player.row - v.x * move_speed, \
-							a->player.col - v.y * move_speed);
+	move_postive = set_pos(a->player.col + v.x * move_speed, \
+							a->player.row + v.y * move_speed);
+	move_negative = set_pos(a->player.col - v.x * move_speed, \
+							a->player.row - v.y * move_speed);
 	if (postive)
 	{
-		if (a->map[move_postive.x][(int)a->player.col] != '1')
-			a->player.row += v.x * move_speed;
-		if (a->map[(int)a->player.row][move_postive.y] != '1')
-			a->player.col += v.y * move_speed;
+		if (a->map[move_postive.y][(int)a->player.col] != '1')
+			a->player.col += v.x * move_speed;
+		if (a->map[(int)a->player.row][move_postive.x] != '1')
+			a->player.row += v.y * move_speed;
 	}
 	else
 	{
-		if (a->map[move_negative.x][(int)a->player.col] != '1')
-			a->player.row -= v.x * move_speed;
-		if (a->map[(int)a->player.row][move_negative.y] != '1')
-			a->player.col -= v.y * move_speed;
+		if (a->map[move_negative.y][(int)a->player.col] != '1')
+			a->player.col -= v.x * move_speed;
+		if (a->map[(int)a->player.row][move_negative.x] != '1')
+			a->player.row -= v.y * move_speed;
 	}
 }
 
@@ -62,9 +62,9 @@ int	handle_key_down(int keycode, t_data *a)
 	else if (keycode == KEY_A)
 		move_pos_negative(a, a->player.plane, 0);
 	else if (keycode == KEY_AR_L)
-		rot_player(&a->player, rad);
-	else if (keycode == KEY_AR_R)
 		rot_player(&a->player, -rad);
+	else if (keycode == KEY_AR_R)
+		rot_player(&a->player, rad);
 	else if (keycode == KEY_ESC)
 		handle_exit(a);
 	render(a);

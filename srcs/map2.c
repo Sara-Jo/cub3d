@@ -6,7 +6,7 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 16:03:33 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/17 13:34:44 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/18 14:07:09 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void	map_line_valid_symbol(char c, t_player *player, int x, int y)
 	else if (c == 'S')
 		*player = set_player(c, x, y, M_PI);
 	else if (c == 'E')
-		*player = set_player(c, x, y, M_PI / (-2.0));
-	else if (c == 'W')
 		*player = set_player(c, x, y, M_PI / 2.0);
+	else if (c == 'W')
+		*player = set_player(c, x, y, M_PI / (-2.0));
 }
 
 void	map_read(char **map, t_player *player)
