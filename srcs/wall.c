@@ -6,14 +6,13 @@
 /*   By: hossong <hossong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 22:27:24 by hossong           #+#    #+#             */
-/*   Updated: 2022/12/18 13:56:35 by hossong          ###   ########.fr       */
+/*   Updated: 2022/12/19 14:47:41 by hossong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "main.h"
 #include <math.h>
-#include <limits.h>
 
 static void	set_dist3(t_dist3 *dist, t_vec2 *ray_dir, t_pos map, t_player *p)
 {
@@ -77,9 +76,9 @@ static t_draw	set_draw_src(t_cast *ele, t_player *player)
 	src.draw_end = src.line_height / 2 + HEIGHT / 2;
 	if (src.draw_end <= 0 || src.draw_end >= HEIGHT)
 		src.draw_end = HEIGHT - 1;
-	src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.x;
-	if (ele->side == 1)
-		src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.y;
+	src.wall_x = player->row + ele->perp_wall_dist * ele->ray_dir.y;
+	if (ele->side == 0)
+		src.wall_x = player->col + ele->perp_wall_dist * ele->ray_dir.x;
 	src.wall_x -= floor(src.wall_x);
 	src.tex_x = (int)(src.wall_x * (double)TEXWIDTH);
 	if (ele->side == 1 && ele->ray_dir.x > 0)
